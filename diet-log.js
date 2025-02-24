@@ -13,6 +13,16 @@ let editLogId = null;
 document.addEventListener("DOMContentLoaded", () => {
     console.log("✅ JavaScript Loaded!");
 
+       // ✅ Hamburger Menu Toggle
+       const menuToggle = document.getElementById("menu-toggle");
+       const navMenu = document.getElementById("nav-menu");
+   
+       if (menuToggle && navMenu) {
+           menuToggle.addEventListener("click", () => {
+               navMenu.classList.toggle("show");
+           });
+       }
+
     // ✅ Meal Selection Logic
     const mealButtons = document.querySelectorAll(".meal-btn");
     const selectedMealInput = document.getElementById("selected-meal");
