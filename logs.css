@@ -168,20 +168,31 @@ nav a {
     background: #0056b3;
 }
 
-/* ✅ Meal Time Buttons (Breakfast, Lunch, Dinner) */
-.meal-time-options button {
+/* ✅ Meal Selection Buttons */
+.meal-selection {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.meal-btn {
     background: #5cb85c;
     color: white;
     padding: 8px 12px;
     border: none;
     border-radius: 5px;
-    margin-right: 5px;
     cursor: pointer;
 }
 
-.meal-time-options button:hover {
+.meal-btn:hover {
     background: #4cae4c;
 }
+
+/* ✅ Highlight Selected Meal */
+.meal-btn.selected {
+    background: #004080;
+}
+
 
 footer {
     background-color: #908e8e;

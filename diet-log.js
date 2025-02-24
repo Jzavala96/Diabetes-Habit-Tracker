@@ -5,6 +5,25 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth
 const db = getFirestore();
 const auth = getAuth();
 
+// ✅ Meal Selection Logic
+document.addEventListener("DOMContentLoaded", () => {
+    const mealButtons = document.querySelectorAll(".meal-btn");
+    const selectedMealInput = document.getElementById("selected-meal");
+
+    mealButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            // ✅ Remove 'selected' class from all buttons
+            mealButtons.forEach(btn => btn.classList.remove("selected"));
+
+            // ✅ Add 'selected' class to clicked button
+            button.classList.add("selected");
+
+            // ✅ Save selected meal type
+            selectedMealInput.value = button.getAttribute("data-meal");
+        });
+    });
+});
+
 // ✅ Function to load logs
 async function loadLogs() {
     const user = auth.currentUser;
@@ -20,6 +39,7 @@ async function loadLogs() {
     });
 }
 
+// ✅ Function to create a log card
 function createLogCard(id, data) {
     const card = document.createElement("div");
     card.classList.add("log-card");
@@ -30,8 +50,8 @@ function createLogCard(id, data) {
             <button class="delete-btn" data-id="${id}">❌</button>
         </div>
         <p><strong>Details:</strong> ${data.details}</p>
-        <p><strong>Time Late:</strong> ${data.time}</p>
-        <p><strong>Meal Time:</strong> ${data.mealTime}</p>
+        <p><strong>Time:</strong> ${data.time}</p>
+        <p><strong>Meal Type:</strong> ${data.mealType || "Not Specified"}</p>
         <p><strong>Snack Label:</strong> ${data.snackLabel || "None"}</p>
     `;
 
@@ -43,7 +63,6 @@ function createLogCard(id, data) {
 
     return card;
 }
-
 
 // ✅ Function to save a new log
 document.getElementById("diet-form").addEventListener("submit", async (e) => {
@@ -58,14 +77,20 @@ document.getElementById("diet-form").addEventListener("submit", async (e) => {
     const mealPeriod = document.getElementById("meal-period").value;
     const mealDate = document.getElementById("meal-date").value;
     const snackLabel = document.getElementById("snack-label").value || "None";
+    const selectedMeal = document.getElementById("selected-meal").value;
     const mealTime = `${mealHour}:${mealMinute} ${mealPeriod}`;
+
+    if (!selectedMeal) {
+        alert("❌ Please select a meal type before saving.");
+        return;
+    }
 
     try {
         await addDoc(collection(db, `logs/${user.uid}/diet`), {
             details: mealDetails,
             time: mealTime,
             date: mealDate,
-            mealTime: "Breakfast", // Default, you can modify it later
+            mealType: selectedMeal,
             snackLabel: snackLabel
         });
 
