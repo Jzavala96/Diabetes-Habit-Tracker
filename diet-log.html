@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diet Log | GlucoGuardian</title>
+    <link rel="stylesheet" href="logs.css">
+</head>
+<body>
+    <header>
+        <img src="img/logo.png" alt="GlucoGuardian Logo" class="logo">
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="exercise-log.html">Exercise Log</a>
+            <a href="sugar-log.html">Sugar Log</a>
+            <button class="signout-btn">Sign Out</button>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Diet Logs</h2>
+        <button id="open-form-btn">Add Diet</button>
+
+        <!-- ✅ Hidden Form (Popup) -->
+        <div id="log-form" class="popup-form hidden">
+            <form id="diet-form">
+                <label for="meal-time">Time:</label>
+                <input type="time" id="meal-time" required>
+
+                <label for="meal-date">Date:</label>
+                <input type="date" id="meal-date" required>
+
+                <label for="meal-details">Meal Details:</label>
+                <textarea id="meal-details" required></textarea>
+
+                <button type="submit">Save Log</button>
+                <button type="button" id="close-form-btn">Cancel</button>
+            </form>
+        </div>
+
+        <!-- ✅ Logs will be displayed here -->
+        <section id="logs-container"></section>
+    </main>
+
+    <script type="module" src="diet-log.js"></script>
+</body>
+</html>
