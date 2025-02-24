@@ -77,8 +77,12 @@ button:hover {
 
 /* Features Section */
 .features {
-    text-align: left; /* Aligns text to the left for a structured layout */
-    padding: 40px 20px; /* Adds spacing around the section */
+    display: flex; /* Enables Flexbox */
+    justify-content: space-between; /* Ensures equal spacing between cards */
+    align-items: stretch; /* Ensures all cards have equal height */
+    flex-wrap: wrap; /* Allows wrapping for smaller screens */
+    gap: 20px; /* Adds spacing between feature cards */
+    padding: 40px 20px;
     background: #edf5f3; /* Matches background with your theme */
 }
 
@@ -86,43 +90,44 @@ button:hover {
 .features-intro {
     display: flex;
     justify-content: space-between;
-    align-items: center; /* Aligns the title and description */
-    flex-wrap: wrap; /* Prevents overlapping on small screens */
-    margin-bottom: 30px; /* Space between intro and feature cards */
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+    width: 100%; /* Ensures it spans full width */
 }
 
 .features-intro h2 {
-    font-size: 28px; /* Adjusted for emphasis */
-    color:#7a9b3f; /* Matches theme */
-    flex: 1; /* Takes available space */
+    font-size: 28px;
+    color: #7a9b3f;
+    flex: 1;
 }
 
 .features-intro p {
     font-size: 16px;
-    color: #1f6ea1; /* Adjusts color for better readability */
-    max-width: 500px; /* Limits width for better readability */
-    text-align: right; /* Aligns the description text to the right */
-    flex: 1; /* Takes available space */
+    color: #1f6ea1;
+    max-width: 500px;
+    text-align: right;
+    flex: 1;
 }
 
 /* Feature Cards */
 .feature {
-    display: inline-block;
-    width: 30%; /* Ensures three cards fit in one row */
-    margin: 10px;
+    flex: 1; /* Ensures all cards take equal width */
+    min-width: 30%; /* Ensures three cards fit in one row */
+    max-width: 32%; /* Prevents them from getting too big */
     padding: 20px;
     border-radius: 8px;
-    background-color:#1f6ea1; /* Sets background to the blue color */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
-    text-align: center; /* Centers the text inside */
-    color:#fff ; /* Makes text white */
+    background-color: #1f6ea1; /* Sets background to blue */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: #fff;
 }
 
 /* Feature Icons */
 .feature i {
-    font-size: 30px; /* Slightly larger */
+    font-size: 30px;
     margin-bottom: 10px;
-    color: #96c44e; /* Sets the icon color to green */
+    color: #96c44e;
 }
 
 footer {
@@ -164,16 +169,26 @@ footer {
     .features-intro {
         flex-direction: column;
         text-align: center;
+        align-items: center;
     }
 
     .features-intro h2, 
     .features-intro p {
         text-align: center;
         margin-bottom: 15px;
+        width: 90%; /* Ensures the text doesn't stretch too wide */
+    }
+
+    /* Stack feature cards */
+    .features {
+        flex-direction: column;
+        align-items: center; /* Centers stacked cards */
+        gap: 15px; /* Adds space between stacked cards */
     }
 
     .feature {
-        width: 100%; /* Stack cards on small screens */
-        margin: 15px 0;
+        width: 90%; /* Makes each feature card take up most of the screen */
+        max-width: 400px; /* Prevents cards from becoming too wide */
+        margin: 10px 0; /* Adds spacing between cards */
     }
 }
