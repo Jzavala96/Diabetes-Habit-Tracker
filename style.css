@@ -12,14 +12,28 @@ body {
 }
 
 header {
+    display: flex; /* Enables Flexbox */
+    align-items: center; /* Vertically centers the items in the header */
+    justify-content: space-between; /* Positions items on opposite ends */
     background-color: var(--blue);
     color: var(--white);
-    text-align: center;
     padding: 20px;
 }
+
 header .logo {
-    width: 150px;  /* Change this to the width you desire */
-    height: auto;  /* Keeps the aspect ratio intact */
+    width: 150px; /* Control the width of your logo */
+    height: auto; /* Maintains aspect ratio of the logo */
+}
+
+header .login a {
+    color: var(--white);
+    text-decoration: none;
+    display: flex;
+    align-items: center; /* Ensures the icon aligns nicely with the text */
+}
+
+header .login i {
+    margin-right: 5px; /* Adds spacing between the icon and text */
 }
 
 
@@ -29,7 +43,7 @@ main {
 .hero {
     background: url('img/HeroImage.png') no-repeat center center/cover; /* Adjust path as necessary */
     position: relative;
-    height: 300px; /* Adjust based on your actual image's display needs */
+    height: 912px; /* Adjust based on your actual image's display needs */
 }
 
 .text-content {
