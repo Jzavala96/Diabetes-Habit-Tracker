@@ -47,10 +47,10 @@ body {
 /* ✅ Main Login Container - Full Width */
 .login-container {
     display: flex;
-    width: 100%; /* Ensures full width */
+    width: 90%; /* Ensures full width */
     max-width: 1400px; /* Prevents extreme stretching on large screens */
-    height: 100vh; /* Makes sure content fills the screen */
-    align-items: stretch; /* Ensures both sections match height */
+    height:90vh; /* Makes sure content fills the screen */
+    align-items: center; /* Ensures both sections match height */
 }
 
 /* ✅ Left Side: Login Box */
@@ -59,9 +59,13 @@ body {
     padding: 50px;
     text-align: center;
     flex: 1; /* Takes half of the screen */
+    min-width: 400px;
+    max-width: 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    justify-content: center;
+    height: 100%; /* Ensure it matches signup box height */
 }
 
 /* ✅ Face ID Icon Centered */
@@ -105,6 +109,7 @@ button:hover {
 /* ✅ Right Side: Sign-Up Section (Full Height & Width) */
 .signup-box {
     flex: 1; /* Takes up half of the width */
+    height: 100%;
     background: url('img/logNsign.png') no-repeat center center/cover;
     display: flex;
     flex-direction: column;
