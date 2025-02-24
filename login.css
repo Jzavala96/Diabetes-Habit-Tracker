@@ -33,6 +33,7 @@ header .login i {
 /* ✅ Push Content Down Below Header */
 body {
     padding-top: 80px; /* Ensures no overlap with header */
+    background-color: #edf5d3;
 }
 
 /* ✅ Main Login Container - Full Width & Proper Height */
