@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | GlucoGuardian</title>
+    <link rel="stylesheet" href="login.css">
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <a href="index.html">
+            <img src="img/logo.png" alt="GlucoGuardian Logo" class="logo">
+        </a>
+        <div class="login">
+            <a href="login.html"><i class="fa-solid fa-user"></i> Login</a>
+        </div>
+    </header>
+    
+
+    <main class="login-container">
+        <div class="login-box">
+            <h2>Login to Your Account</h2>
+            <p>Login Using Face ID</p>
+            <img src="img/face-id.png" alt="Face ID Icon" class="biometric-icon" id="biometric-btn">
+
+            <form id="login-form">
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit">Sign In</button>
+            </form>
+        </div>
+
+        <div class="signup-box">
+            <h2>NEW HERE?</h2>
+            <p>Sign up and take control of your diabetes today!</p>
+            <a href="signup.html" class="signup-button">Sign Up</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>Copyright &copy; GlucoGuardian</p>
+    </footer>
+
+    <script src="login.js"></script>
+</body>
+</html>
