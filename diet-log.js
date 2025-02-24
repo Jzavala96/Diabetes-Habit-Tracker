@@ -11,17 +11,15 @@ let editLogId = null;
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("✅ JavaScript Loaded!");
+    const menuToggle = document.getElementById("menu-toggle");
+    const navMenu = document.getElementById("nav-menu");
 
-       // ✅ Hamburger Menu Toggle
-       const menuToggle = document.getElementById("menu-toggle");
-       const navMenu = document.getElementById("nav-menu");
-   
-       if (menuToggle && navMenu) {
-           menuToggle.addEventListener("click", () => {
-               navMenu.classList.toggle("show");
-           });
-       }
+    if (menuToggle && navMenu) {
+        menuToggle.addEventListener("click", () => {
+            navMenu.classList.toggle("show");
+            document.body.classList.toggle("no-scroll"); 
+        });
+    }
 
     // ✅ Meal Selection Logic
     const mealButtons = document.querySelectorAll(".meal-btn");
