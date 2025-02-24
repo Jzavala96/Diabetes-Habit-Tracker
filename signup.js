@@ -1,6 +1,5 @@
-// ✅ Import Firebase services correctly
 import { auth, db } from "./firebase-config.js";
-import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+import { createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
 import { doc, setDoc } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -27,21 +26,24 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         try {
-            // ✅ Correct way to create a user in Firebase Modular SDK
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
-            console.log("✅ User created successfully:", user);
+
+            // ✅ Set display name in Firebase Auth
+            await updateProfile(user, {
+                displayName: firstName
+            });
 
             // ✅ Store user info in Firestore
             await setDoc(doc(db, "users", user.uid), {
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
-                uid: user.uid,
+                uid: user.uid
             });
 
             console.log("✅ User info saved!");
-            window.location.href = "login.html"; // Redirect to login page
+            window.location.href = "login.html";
         } catch (error) {
             console.error("❌ Error:", error.message);
             alert("Error: " + error.message);

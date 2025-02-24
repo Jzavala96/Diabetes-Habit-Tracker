@@ -11,7 +11,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #004080;
+    background-color: #fff;
     color: white;
     padding: 20px;
 }
@@ -115,6 +115,12 @@ header .logo {
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
+}
+footer {
+    background-color: #908e8e;
+    color: var(--white);
+    text-align: center;
+    padding: 10px;
 }
 
 @media screen and (max-width: 768px) {

@@ -6,17 +6,17 @@ body, h1, p, h2, h3 {
 
 body {
     font-family: 'Arial', sans-serif;
-    background: var(--off-white);
-    color: var(--black);
+    background: #edf5f3;
+    color: #000;
     padding: 20px;
 }
-
+   
 header {
     display: flex; /* Enables Flexbox */
     align-items: center; /* Vertically centers the items in the header */
     justify-content: space-between; /* Positions items on opposite ends */
-    background-color: var(--blue);
-    color: var(--white);
+    background-color: #fff;
+    color: #000;
     padding: 20px;
 }
 
