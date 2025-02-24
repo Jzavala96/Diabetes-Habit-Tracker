@@ -97,14 +97,16 @@ button:hover {
 }
 
 .features-intro h2 {
-    font-size: 28px;
+    font-size: 40px;
     color: #7a9b3f;
+    margin-top: 20px;
     flex: 1;
 }
 
 .features-intro p {
-    font-size: 16px;
+    font-size: 22px;
     color: #1f6ea1;
+    margin-top: 15px;
     max-width: 500px;
     text-align: right;
     flex: 1;
@@ -125,7 +127,7 @@ button:hover {
 
 /* Feature Icons */
 .feature i {
-    font-size: 30px;
+    font-size: 50px;
     margin-bottom: 10px;
     color: #96c44e;
 }
@@ -201,5 +203,25 @@ footer {
         width: 90%; /* Makes each feature card take up most of the screen */
         max-width: 400px; /* Prevents cards from becoming too wide */
         margin: 10px 0; /* Adds spacing between cards */
+    }
+    @media (min-width: 1680px) {
+    .features {
+        justify-content: space-between; /* Restores original layout */
+        flex-wrap: nowrap; /* Prevents unwanted wrapping */
+    }
+
+    .feature {
+        width: 30%; /* Ensures exactly three columns */
+    }
+}
+}
+@media (min-width: 1680px) {
+    .features {
+        justify-content: space-between; /* Restores original layout */
+        flex-wrap: nowrap; /* Prevents unwanted wrapping */
+    }
+
+    .feature {
+        width: 30%; /* Ensures exactly three columns */
     }
 }
