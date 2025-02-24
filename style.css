@@ -21,6 +21,32 @@ header {
 main {
     text-align: center;
 }
+.hero {
+    background: url('img/HeroImage.png') no-repeat center center/cover; /* Adjust path as necessary */
+    position: relative;
+    height: 300px; /* Adjust based on your actual image's display needs */
+}
+
+.text-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white; /* Assuming you want white text over a darker image */
+    width: 100%; /* Ensures the text is centered in the .hero container */
+}
+
+button {
+    background-color: #96c44e; /* Green button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
 
 .feature {
     margin-top: 20px;
