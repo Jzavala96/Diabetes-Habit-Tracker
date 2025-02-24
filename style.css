@@ -54,16 +54,23 @@ main {
     text-align: center;
     color: white; /* Assuming you want white text over a darker image */
     width: 100%; /* Ensures the text is centered in the .hero container */
+    padding: 20px; /* Adds padding to ensure text does not touch the edges */
+    box-sizing: border-box; /* Ensures padding does not affect the width */
 }
 
 button {
     background-color: #96c44e; /* Green button */
     color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: 12px 24px; /* Slightly increased padding for better readability */
+    border-radius: 20px; /* More pronounced rounded corners */
     cursor: pointer;
     font-size: 16px;
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+button:hover {
+    background-color: #7a9b3f; /* Darker shade of green for hover effect */
 }
 
 
@@ -112,5 +119,24 @@ footer {
 
     .feature img {
         width: 80px; /* Smaller icon size for mobile devices */
+    }
+    .hero {
+        height: auto; /* Adjusts height dynamically based on content */
+        padding: 50px 0; /* Adds vertical padding */
+    }
+
+    .text-content {
+        top: initial;
+        bottom: 50px; /* Positions text content above the bottom */
+        transform: translate(-50%, 0); /* Adjusts transformation for mobile */
+    }
+
+    h1 {
+        font-size: 28px; /* Smaller font size for better readability on small screens */
+    }
+
+    button {
+        font-size: 14px; /* Smaller button text on small screens */
+        padding: 10px 20px; /* Adjusts padding for smaller screens */
     }
 }
