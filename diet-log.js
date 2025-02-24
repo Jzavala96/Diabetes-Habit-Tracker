@@ -5,22 +5,47 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth
 const db = getFirestore();
 const auth = getAuth();
 
-// ✅ Meal Selection Logic
 document.addEventListener("DOMContentLoaded", () => {
+    console.log("✅ JavaScript Loaded!");
+
+    // ✅ Meal Selection Logic
     const mealButtons = document.querySelectorAll(".meal-btn");
     const selectedMealInput = document.getElementById("selected-meal");
 
     mealButtons.forEach(button => {
         button.addEventListener("click", () => {
-            // ✅ Remove 'selected' class from all buttons
             mealButtons.forEach(btn => btn.classList.remove("selected"));
-
-            // ✅ Add 'selected' class to clicked button
             button.classList.add("selected");
-
-            // ✅ Save selected meal type
             selectedMealInput.value = button.getAttribute("data-meal");
         });
+    });
+
+    // ✅ Show/Hide Add Diet Form
+    const openFormBtn = document.getElementById("open-form-btn");
+    const closeFormBtn = document.getElementById("close-form-btn");
+    const logForm = document.getElementById("log-form");
+
+    if (openFormBtn && closeFormBtn && logForm) {
+        openFormBtn.addEventListener("click", () => {
+            console.log("✅ Add Diet Clicked!");
+            logForm.classList.remove("hidden");
+            logForm.style.display = "block";
+        });
+
+        closeFormBtn.addEventListener("click", () => {
+            console.log("✅ Cancel Clicked!");
+            logForm.classList.add("hidden");
+            logForm.style.display = "none";
+        });
+    } else {
+        console.error("❌ ERROR: Form elements not found!");
+    }
+
+    // ✅ Load logs on page load
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            loadLogs();
+        }
     });
 });
 
@@ -96,17 +121,9 @@ document.getElementById("diet-form").addEventListener("submit", async (e) => {
 
         alert("✅ Diet log saved!");
         document.getElementById("diet-form").reset(); // ✅ Clear form
+        logForm.style.display = "none"; // ✅ Hide form after saving
         loadLogs(); // ✅ Reload logs
     } catch (error) {
         console.error("❌ Error saving log:", error);
     }
-});
-
-// ✅ Load logs on page load
-document.addEventListener("DOMContentLoaded", () => {
-    auth.onAuthStateChanged((user) => {
-        if (user) {
-            loadLogs();
-        }
-    });
 });
