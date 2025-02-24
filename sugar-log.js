@@ -1,18 +1,18 @@
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, updateDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
 
-// ✅ Initialize Firebase services
+//  Initialize Firebase services
 const db = getFirestore();
 const auth = getAuth();
 
-// ✅ Track Edit State & Selected Log ID
+//  Track Edit State & Selected Log ID
 let editMode = false;
 let editLogId = null;
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("✅ JavaScript Loaded!");
+    console.log(" JavaScript Loaded!");
 
-    // ✅ Medication Selection Logic
+    //  Medication Selection Logic
     const medButtons = document.querySelectorAll(".med-btn");
     const selectedMedInput = document.getElementById("selected-med");
 
@@ -23,8 +23,19 @@ document.addEventListener("DOMContentLoaded", () => {
             selectedMedInput.value = button.getAttribute("data-med");
         });
     });
+     //  Time of Day Selection Logic
+     const timeButtons = document.querySelectorAll(".time-btn");
+     const selectedTimeInput = document.getElementById("selected-time");
+ 
+     timeButtons.forEach(button => {
+         button.addEventListener("click", () => {
+             timeButtons.forEach(btn => btn.classList.remove("selected"));
+             button.classList.add("selected");
+             selectedTimeInput.value = button.getAttribute("data-time");
+         });
+     });
 
-    // ✅ Show/Hide Add Sugar Log Form
+    //  Show/Hide Add Sugar Log Form
     const openFormBtn = document.getElementById("open-form-btn");
     const closeFormBtn = document.getElementById("close-form-btn");
     const logForm = document.getElementById("log-form");
@@ -32,7 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (openFormBtn && closeFormBtn && logForm) {
         openFormBtn.addEventListener("click", () => {
-            console.log("✅ Add Sugar Log Clicked!");
             editMode = false;
             editLogId = null;
             sugarForm.reset();
@@ -41,12 +51,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         closeFormBtn.addEventListener("click", () => {
-            console.log("✅ Cancel Clicked!");
             logForm.classList.add("hidden");
             logForm.style.display = "none";
         });
-    } else {
-        console.error("❌ ERROR: Form elements not found!");
     }
 
     // ✅ Load logs on page load
@@ -67,36 +74,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const selectedMed = document.getElementById("selected-med").value;
         const insulinUnits = document.getElementById("insulin-units").value;
         const sugarDate = document.getElementById("sugar-date").value;
+        const selectedTime = document.getElementById("selected-time").value;
+        const logTime = `${document.getElementById("log-hour").value}:${document.getElementById("log-minute").value} ${document.getElementById("log-period").value}`;
 
-        if (!selectedMed) {
-            alert("❌ Please select a medication type.");
+        if (!selectedMed || !selectedTime) {
+            alert(" Please select medication and time of day.");
             return;
         }
 
         try {
-            if (editMode && editLogId) {
-                await updateDoc(doc(db, `logs/${user.uid}/sugar`), {
-                    level: sugarLevel,
-                    medication: selectedMed,
-                    insulin: insulinUnits,
-                    date: sugarDate
-                });
-            } else {
-                const docRef = await addDoc(collection(db, `logs/${user.uid}/sugar`), {
-                    level: sugarLevel,
-                    medication: selectedMed,
-                    insulin: insulinUnits,
-                    date: sugarDate
-                });
+            const logData = { sugarLevel, medication: selectedMed, insulinUnits, sugarDate, selectedTime, logTime };
 
-                document.getElementById("logs-container").prepend(
-                    createLogCard(docRef.id, {
-                        level: sugarLevel,
-                        medication: selectedMed,
-                        insulin: insulinUnits,
-                        date: sugarDate
-                    })
-                );
+            if (editMode && editLogId) {
+                await updateDoc(doc(db, `logs/${user.uid}/sugar`, editLogId), logData);
+            } else {
+                await addDoc(collection(db, `logs/${user.uid}/sugar`), logData);
             }
 
             sugarForm.reset();
@@ -105,12 +97,12 @@ document.addEventListener("DOMContentLoaded", () => {
             editLogId = null;
             loadLogs();
         } catch (error) {
-            console.error("❌ Error saving log:", error);
+            console.error(" Error saving log:", error);
         }
     });
 });
 
-// ✅ Function to load logs
+// Function to load logs
 async function loadLogs() {
     const user = auth.currentUser;
     if (!user) return;
@@ -125,7 +117,7 @@ async function loadLogs() {
     });
 }
 
-// ✅ Function to create a log card
+// Function to create a log card
 function createLogCard(id, data) {
     const card = document.createElement("div");
     card.classList.add("log-card");
@@ -141,7 +133,7 @@ function createLogCard(id, data) {
         <button class="edit-btn" data-id="${id}">Edit</button>
     `;
 
-    // ✅ Delete button functionality
+    // Delete button functionality
     card.querySelector(".delete-btn").addEventListener("click", async () => {
         await deleteDoc(doc(db, `logs/${auth.currentUser.uid}/sugar`, id));
         loadLogs();

@@ -11,12 +11,12 @@
     <header>
         <img src="img/logo.png" alt="GlucoGuardian Logo" class="logo">
         
-        <!-- ✅ Hamburger Menu -->
+        <!-- Hamburger Menu -->
         <button class="hamburger-menu" id="menu-toggle">
             <i class="fa-solid fa-bars"></i> <!-- FontAwesome Icon -->
         </button>
     
-        <!-- ✅ Navigation Menu -->
+        <!-- Navigation Menu -->
         <nav id="nav-menu">
             <a href="home.html">Home</a>
             <a href="exercise-log.html">Exercise Log</a>
@@ -31,7 +31,7 @@
         <h2>Sugar Level Logs</h2>
         <button id="open-form-btn" class="add-btn">Add Sugar Log</button>
 
-        <!-- ✅ Hidden Form (Popup) -->
+        <!-- Hidden Form (Popup) -->
         <div id="log-form" class="popup-form hidden">
             <form id="sugar-form">
                 <label for="sugar-level">Sugar Level (mmol/L):</label>
@@ -51,12 +51,34 @@
                 <label for="sugar-date">Date:</label>
                 <input type="date" id="sugar-date" required>
 
+                <!--  Time of Day Selection -->
+                <label>Time of Day:</label>
+                <div class="time-buttons">
+                    <button type="button" class="time-btn" data-time="Morning">Morning</button>
+                    <button type="button" class="time-btn" data-time="Breakfast">Breakfast</button>
+                    <button type="button" class="time-btn" data-time="Lunch">Lunch</button>
+                    <button type="button" class="time-btn" data-time="Dinner">Dinner</button>
+                    <button type="button" class="time-btn" data-time="Night">Night</button>
+                </div>
+                <input type="hidden" id="selected-time" required>
+
+                <!--  Time Input -->
+                <label for="log-hour">Time:</label>
+                <div class="time-input">
+                    <input type="number" id="log-hour" min="1" max="12" placeholder="HH" required>
+                    <input type="number" id="log-minute" min="0" max="59" placeholder="MM" required>
+                    <select id="log-period">
+                        <option value="AM">AM</option>
+                        <option value="PM">PM</option>
+                    </select>
+                </div>
+
                 <button type="submit">Save Log</button>
                 <button type="button" id="close-form-btn">Cancel</button>
             </form>
         </div>
 
-        <!-- ✅ Logs will be displayed here -->
+        <!--  Logs will be displayed here -->
         <section id="logs-container" class="logs-container"></section>
     </main>
 
