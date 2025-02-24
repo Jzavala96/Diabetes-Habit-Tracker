@@ -5,66 +5,58 @@ body, h1, p, h2 {
     font-family: 'Arial', sans-serif;
 }
 
+/* ✅ Fix Header & Prevent Overlapping */
 header {
-    display: flex; /* Enables Flexbox */
-    align-items: center; /* Vertically centers the items in the header */
-    justify-content: space-between; /* Positions items on opposite ends */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     background-color: var(--blue);
     color: var(--white);
     padding: 20px;
+    position: fixed; /* Keeps the header fixed */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
 }
 
-header .logo {
-    width: 150px; /* Control the width of your logo */
-    height: auto; /* Maintains aspect ratio of the logo */
+/* ✅ Push Content Down Below Header */
+body {
+    padding-top: 80px; /* Ensures no overlap with header */
 }
 
-header .login a {
-    color: var(--white);
-    text-decoration: none;
-    display: flex;
-    align-items: center; /* Ensures the icon aligns nicely with the text */
-}
-
-header .login i {
-    margin-right: 5px; /* Adds spacing between the icon and text */
-}
-
-/* Main Login Container */
+/* ✅ Main Login Container - Full Width & Proper Height */
 .login-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between; /* Spaces login & sign-up evenly */
     align-items: center;
-    height: 935px; /* Matches the image height */
-    max-width: 1200px;
-    margin: 0 auto;
+    min-height: 100vh; /* Makes sure content fills the screen */
+    width: 90%; /* Keeps layout wide but with a small margin */
+    max-width: 1400px; /* Prevents stretching too much on large screens */
+    margin: auto;
+    gap: 20px;
 }
 
-/* Left side: Login Box */
+/* ✅ Left Side: Login Box */
 .login-box {
-    background: #edf5f3; /* Matches form background */
+    background: #edf5f3;
     padding: 50px;
     border-radius: 10px;
     text-align: center;
-    width: 50%;
-    height: 935px; /* Match the image height */
+    flex: 1; /* Allows it to take up majority width */
+    min-width: 400px;
+    height: 100%; /* Ensures it fills the height properly */
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Keeps form centered */
+    justify-content: center;
 }
 
-/* Login Heading */
-.login-box h2 {
-    font-size: 24px;
-    margin-bottom: 15px;
-}
-
-/* Centering Face ID Icon */
+/* ✅ Face ID Icon Centered */
 .face-id-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 15px 0; /* Adds space between text and icon */
+    margin: 15px 0;
 }
 
 .biometric-icon {
@@ -73,7 +65,7 @@ header .login i {
     cursor: pointer;
 }
 
-/* Input Fields */
+/* ✅ Input Fields */
 input {
     width: 90%;
     padding: 12px;
@@ -82,7 +74,7 @@ input {
     border-radius: 5px;
 }
 
-/* Sign In Button */
+/* ✅ Sign In Button */
 button {
     width: 90%;
     padding: 12px;
@@ -97,21 +89,21 @@ button:hover {
     background: #0f4c75;
 }
 
-/* Right side: Sign-Up Section */
+/* ✅ Right Side: Sign-Up Section */
 .signup-box {
     text-align: center;
-    width: 50%;
-    height: 935px; /* Match image height */
+    flex: 1;
+    height: 100%; /* Ensures equal height */
     background: url('img/logNsign.png') no-repeat center center/cover;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Center content */
-    align-items: center; /* Center text */
+    justify-content: center;
+    align-items: center;
     color: white;
     padding: 40px;
 }
 
-/* Ensure "NEW HERE?" text is centered */
+/* ✅ Ensure "NEW HERE?" text is centered */
 .signup-box h2 {
     font-size: 28px;
     margin-bottom: 10px;
@@ -122,7 +114,7 @@ button:hover {
     text-align: center;
 }
 
-/* Signup Button */
+/* ✅ Signup Button */
 .signup-button {
     display: inline-block;
     background: #96c44e;
@@ -135,23 +127,42 @@ button:hover {
 .signup-button:hover {
     background: #7a9b3f;
 }
+
+/* ✅ Fix Footer to Stay at Bottom */
 footer {
     background-color: #908e8e;
     color: var(--white);
     text-align: center;
     padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
-/* Mobile View */
-@media (max-width: 768px) {
+/* ✅ Responsive Adjustments */
+@media (max-width: 1200px) {
     .login-container {
-        flex-direction: column;
-        height: auto;
+        flex-direction: column; /* Stack elements for smaller screens */
+        height: auto; /* Adjust height dynamically */
     }
 
     .login-box, .signup-box {
         width: 100%;
-        height: auto;
-        padding: 40px;
+        max-width: 600px;
+        min-height: 500px; /* Adjusted for smaller screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+        padding-bottom: 60px; /* Prevents content from touching footer */
+    }
+
+    .login-box, .signup-box {
+        width: 100%;
+        max-width: 400px;
+        padding: 30px;
+        min-height: 450px; /* Adjust for smaller mobile screens */
     }
 }
