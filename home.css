@@ -173,13 +173,10 @@ nav a {
 
 /* ✅ Footer */
 footer {
+    background-color: #908e8e;
+    color: var(--white);
     text-align: center;
-    background-color: black;
     padding: 10px;
-}
-
-footer img {
-    width: 40px;
 }
 @media screen and (max-width: 768px) {
     .hamburger-menu {
