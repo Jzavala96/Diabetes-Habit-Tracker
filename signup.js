@@ -1,8 +1,7 @@
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-
 document.addEventListener('DOMContentLoaded', function() {
     const signupForm = document.getElementById('signup-form');
-    signupForm.addEventListener('submit', function(e) {
+    
+    signupForm.addEventListener('submit', async function(e) {
         e.preventDefault();
 
         const firstName = document.getElementById('first-name').value;
@@ -22,21 +21,30 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        const auth = getAuth();
+        // ✅ Get Firebase Auth and Firestore
+        const auth = window.firebaseAuth;
+        const db = window.firebaseDB;
 
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed in 
-                var user = userCredential.user;
-                console.log("User created successfully:", user);
-                // Redirect the user to the login page
-                window.location.href = 'login.html'; // Redirect to login page
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                // Handle Errors here.
-                alert("Error: " + errorMessage);
+        try {
+            // ✅ Create user
+            const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+            const user = userCredential.user;
+            console.log("User created:", user);
+
+            // ✅ Store additional user info
+            await db.collection("users").doc(user.uid).set({
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                uid: user.uid
             });
+
+            console.log("User info saved to Firestore!");
+            window.location.href = 'login.html'; // Redirect to login
+
+        } catch (error) {
+            console.error("Error:", error.message);
+            alert("Error: " + error.message);
+        }
     });
 });

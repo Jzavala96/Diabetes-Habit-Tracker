@@ -7,19 +7,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
-        // ✅ Get Firebase Auth from the global window object
+        // ✅ Use Firebase Auth from window
         const auth = window.firebaseAuth;
 
         try {
-            // ✅ Sign in user with Firebase Authentication
             const userCredential = await auth.signInWithEmailAndPassword(email, password);
-            const user = userCredential.user;
-            console.log("Logged in successfully:", user);
-
-            // ✅ Redirect to dashboard (Modify URL as needed)
+            console.log("Logged in:", userCredential.user);
             window.location.href = 'dashboard.html';
         } catch (error) {
-            console.error("Error logging in:", error.code, error.message);
+            console.error("Error:", error.message);
             alert("Login failed: " + error.message);
         }
     });
