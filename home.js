@@ -15,8 +15,8 @@ async function getLatestLog(collectionName, timeField, dateField, valueField, ti
 
     if (!snapshot.empty) {
         const latestLog = snapshot.docs[0].data();
-        document.getElementById(timeElement).textContent = latestLog[timeField];
-        document.getElementById(dateElement).textContent = latestLog[dateField];
+        document.getElementById(timeElement).textContent = latestLog[timeField] || "--";
+        document.getElementById(dateElement).textContent = latestLog[dateField] || "--";
         if (valueElement) {
             document.getElementById(valueElement).textContent = latestLog[valueField] + " mmol/L";
         }
@@ -48,4 +48,12 @@ document.getElementById("signout-btn").addEventListener("click", () => {
 // Load user data on page load
 document.addEventListener("DOMContentLoaded", () => {
     loadUserName();
+    const menuToggle = document.getElementById("menu-toggle");
+    const navMenu = document.getElementById("nav-menu");
+    
+    if (menuToggle && navMenu) {
+        menuToggle.addEventListener("click", () => {
+            navMenu.classList.toggle("show");
+        });
+    }
 });
