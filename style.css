@@ -79,7 +79,7 @@ button:hover {
 .features {
     text-align: left; /* Aligns text to the left for a structured layout */
     padding: 40px 20px; /* Adds spacing around the section */
-    background: var(--off-white); /* Matches background with your theme */
+    background: #edf5f3; /* Matches background with your theme */
 }
 
 /* Features Intro (Title & Description) */
@@ -93,13 +93,13 @@ button:hover {
 
 .features-intro h2 {
     font-size: 28px; /* Adjusted for emphasis */
-    color: var(--green); /* Matches theme */
+    color:#7a9b3f; /* Matches theme */
     flex: 1; /* Takes available space */
 }
 
 .features-intro p {
     font-size: 16px;
-    color: var(--blue); /* Adjusts color for better readability */
+    color: #1f6ea1; /* Adjusts color for better readability */
     max-width: 500px; /* Limits width for better readability */
     text-align: right; /* Aligns the description text to the right */
     flex: 1; /* Takes available space */
@@ -112,17 +112,17 @@ button:hover {
     margin: 10px;
     padding: 20px;
     border-radius: 8px;
-    background-color: var(--blue); /* Sets background to the blue color */
+    background-color:#1f6ea1; /* Sets background to the blue color */
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
     text-align: center; /* Centers the text inside */
-    color: var(--white); /* Makes text white */
+    color:#fff ; /* Makes text white */
 }
 
 /* Feature Icons */
 .feature i {
     font-size: 30px; /* Slightly larger */
     margin-bottom: 10px;
-    color: var(--green); /* Sets the icon color to green */
+    color: #96c44e; /* Sets the icon color to green */
 }
 
 footer {
