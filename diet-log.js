@@ -5,25 +5,39 @@ import { getFirestore, doc, collection, addDoc, getDocs } from "https://www.gsta
 const auth = getAuth();
 const db = getFirestore();
 
-// ✅ Handle User Authentication
+// ✅ Ensure User is Authenticated
 onAuthStateChanged(auth, async (user) => {
     if (!user) {
-        window.location.href = "index.html"; // Redirect to welcome page if not logged in
+        window.location.href = "index.html"; // Redirect if not logged in
     } else {
         loadLogs(user.uid); // ✅ Load existing logs for this user
     }
 });
 
-// ✅ Open & Close Popup Form
-document.getElementById("open-form-btn").addEventListener("click", () => {
-    document.getElementById("log-form").classList.remove("hidden");
+// ✅ Ensure the "Add Diet" button is clickable
+document.addEventListener("DOMContentLoaded", () => {
+    const openFormBtn = document.getElementById("open-form-btn");
+    const closeFormBtn = document.getElementById("close-form-btn");
+    const logForm = document.getElementById("log-form");
+
+    if (openFormBtn && closeFormBtn && logForm) {
+        // ✅ Open form when clicking "Add Diet"
+        openFormBtn.addEventListener("click", () => {
+            logForm.classList.remove("hidden");
+            logForm.style.display = "block"; // ✅ Ensure form becomes visible
+        });
+
+        // ✅ Close form when clicking "Cancel"
+        closeFormBtn.addEventListener("click", () => {
+            logForm.classList.add("hidden");
+            logForm.style.display = "none"; // ✅ Ensure form is hidden again
+        });
+    } else {
+        console.error("Form or button elements not found!");
+    }
 });
 
-document.getElementById("close-form-btn").addEventListener("click", () => {
-    document.getElementById("log-form").classList.add("hidden");
-});
-
-// ✅ Handle Form Submission
+// ✅ Handle Form Submission and Save to Firestore
 document.getElementById("diet-form").addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -34,15 +48,15 @@ document.getElementById("diet-form").addEventListener("submit", async (e) => {
     const user = auth.currentUser;
 
     try {
-        // ✅ Save log to Firestore under the user’s logs
         await addDoc(collection(db, `logs/${user.uid}/diet`), {
             time: mealTime,
             date: mealDate,
             details: mealDetails
         });
 
-        alert("Log saved!");
-        document.getElementById("log-form").classList.add("hidden"); // Close form
+        alert("Diet log saved!");
+        document.getElementById("log-form").classList.add("hidden"); // Hide form
+        document.getElementById("log-form").style.display = "none";
         loadLogs(user.uid); // Refresh logs
     } catch (error) {
         console.error("Error saving log:", error);
@@ -62,8 +76,8 @@ async function loadLogs(userId) {
         logElement.classList.add("log-card");
         logElement.innerHTML = `
             <h3>Date: ${log.date}</h3>
-            <p><strong>Details:</strong> ${log.details}</p>
             <p><strong>Time:</strong> ${log.time}</p>
+            <p><strong>Meal Details:</strong> ${log.details}</p>
         `;
         logsContainer.appendChild(logElement);
     });

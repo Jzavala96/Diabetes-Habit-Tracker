@@ -1,4 +1,4 @@
-/* General Styling */
+/* ✅ General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -6,7 +6,7 @@ body {
     background-color: #f4f4f4;
 }
 
-/* Navigation */
+/* ✅ Navigation */
 header {
     display: flex;
     justify-content: space-between;
@@ -22,14 +22,61 @@ nav a {
     margin: 0 10px;
 }
 
-/* Button */
-button {
-    padding: 10px 15px;
+.signout-btn {
+    background: red;
+    color: white;
+    padding: 8px 12px;
     border: none;
     cursor: pointer;
 }
 
-/* Popup Form */
+/* ✅ Page Container */
+.container {
+    width: 80%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+/* ✅ Add Button */
+.add-btn {
+    background: #7CB518;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+/* ✅ Logs Container */
+.logs-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+/* ✅ Log Cards */
+.log-card {
+    background: white;
+    padding: 15px;
+    width: 60%;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: left;
+}
+
+.log-card h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #004080;
+}
+
+.log-card p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+/* ✅ Popup Form */
 .popup-form {
     position: fixed;
     top: 50%;

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diet Log | GlucoGuardian</title>
+    <title>Diet Logs | GlucoGuardian</title>
     <link rel="stylesheet" href="logs.css">
 </head>
 <body>
@@ -17,9 +17,9 @@
         </nav>
     </header>
 
-    <main>
+    <main class="container">
         <h2>Diet Logs</h2>
-        <button id="open-form-btn">Add Diet</button>
+        <button id="open-form-btn" class="add-btn">Add Diet</button>
 
         <!-- ✅ Hidden Form (Popup) -->
         <div id="log-form" class="popup-form hidden">
@@ -39,9 +39,15 @@
         </div>
 
         <!-- ✅ Logs will be displayed here -->
-        <section id="logs-container"></section>
+        <section id="logs-container" class="logs-container"></section>
     </main>
+
+    <footer>
+        <img src="img/logo-small.png" alt="GlucoGuardian Small Logo">
+        <p>copyright © GlucoGuardian</p>
+    </footer>
 
     <script type="module" src="diet-log.js"></script>
 </body>
 </html>
+sss
