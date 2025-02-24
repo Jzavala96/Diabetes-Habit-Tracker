@@ -7,33 +7,65 @@ body {
     color: white;
 }
 
-/* ✅ Header & Navigation */
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: black;
+    display: flex; /* Enables Flexbox */
+    align-items: center; /* Vertically centers the items in the header */
+    justify-content: space-between; /* Positions items on opposite ends */
+    background-color: var(--blue);
+    color: var(--white);
     padding: 20px;
 }
 
 header .logo {
-    width: 100px;
+    width: 150px; /* Control the width of your logo */
+    height: auto; /* Maintains aspect ratio of the logo */
 }
 
+header .login a {
+    color: var(--white);
+    text-decoration: none;
+    display: flex;
+    align-items: center; /* Ensures the icon aligns nicely with the text */
+}
+
+header .login i {
+    margin-right: 5px; /* Adds spacing between the icon and text */
+}
 nav {
     display: flex;
-    align-items: center;
     gap: 15px;
 }
 
 nav a {
-    color: white;
+    color: black;
     text-decoration: none;
-    font-size: 16px;
+    margin: 0 10px;
+}
+/* ✅ Hamburger Menu Button */
+.hamburger-menu {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    display: none;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #000;
 }
 
-nav .logout {
-    color: red;
+/* ✅ Navigation Menu */
+#nav-menu {
+    display: flex;
+    gap: 15px;
+}
+
+.signout-btn {
+    background: red;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
 }
 
 .fa-user {
@@ -41,88 +73,103 @@ nav .logout {
     color: white;
 }
 
-/* ✅ Hero Section */
 .hero {
     position: relative;
     text-align: center;
+    color: white;
 }
 
-.hero-image {
+.hero img {
     width: 100%;
-    max-height: 400px;
-    object-fit: cover;
+    height: auto;
+    display: block;
 }
 
-.hero-text {
+.hero h1 {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.5);
-    padding: 20px;
-    border-radius: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    padding: 10px;
+    border-radius: 5px;
 }
 
-.hero-text h1 {
-    font-size: 2rem;
-}
-
-.sugar-log-btn {
+.hero button {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: #7CB518;
     color: white;
-    padding: 10px 20px;
     border: none;
-    font-size: 16px;
+    padding: 10px 20px;
     cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
 }
 
-/* ✅ Overview Section */
+.hero button:hover {
+    background-color: #689813;
+}
 .overview {
     text-align: center;
-    padding: 40px 20px;
-    background-color: white;
-    color: black;
+    margin: 30px auto;
 }
 
 .overview h2 {
     color: #7CB518;
     font-size: 24px;
+    margin-bottom: 20px;
 }
 
-.cards {
+.card-container {
     display: flex;
     justify-content: center;
     gap: 20px;
 }
 
 .card {
-    background: #004080;
-    padding: 20px;
-    text-align: center;
-    border-radius: 10px;
+    background: #2176FF;
+    color: white;
     width: 200px;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 .card h3 {
     font-size: 18px;
+    margin-bottom: 10px;
 }
 
-.time, .sugar-level {
-    font-size: 22px;
+.card .value {
+    font-size: 28px;
     font-weight: bold;
 }
 
-.date {
+.card p {
     font-size: 14px;
+    margin: 5px 0;
 }
 
-.tracker-btn {
-    background: #7CB518;
+.card button {
+    background: #4CAF50;
     color: white;
-    padding: 8px 12px;
     border: none;
+    padding: 8px;
+    border-radius: 5px;
     cursor: pointer;
+    margin-top: 10px;
 }
+
+.card button:hover {
+    background: #3A8E3A;
+}
+
 
 /* ✅ Footer */
 footer {
@@ -134,3 +181,55 @@ footer {
 footer img {
     width: 40px;
 }
+@media screen and (max-width: 768px) {
+    .hamburger-menu {
+        display: block;
+    }
+
+    #nav-menu {
+        display: none;
+        flex-direction: column;
+        background-color: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh; /* Make it full-screen for better UX */
+        text-align: center;
+        padding-top: 50px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+    }
+
+    #nav-menu.show {
+        display: flex;
+    }
+
+    #nav-menu a {
+        padding: 15px;
+        font-size: 20px;
+        display: block;
+        color: black;
+        text-decoration: none;
+    }
+
+    #nav-menu button {
+        background: red;
+        color: white;
+        width: 100%;
+        padding: 15px;
+        font-size: 20px;
+        border: none;
+        cursor: pointer;
+    }
+    .card-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero h1 {
+        font-size: 20px;
+        padding: 5px;
+    }
+}
+

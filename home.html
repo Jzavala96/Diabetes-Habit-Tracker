@@ -11,25 +11,47 @@
     <header>
         <img src="img/logo.png" alt="GlucoGuardian Logo" class="logo">
         <nav>
-            <a href="diet-log.html"> Diet Tracker</a>
-            <a href="exercise-log.html"> Exercise Logs</a>
+            <a href="diet-log.html">Diet Tracker</a>
+            <a href="exercise-log.html">Exercise Logs</a>
             <a href="sugar-log.html">Sugar Logs</a>
-            <button class="signout-btn">Sign Out</button>
-
+            <button id="signout-btn">Sign Out</button>
         </nav>
     </header>
 
     <main class="home-container">
         <section class="hero">
             <img src="img/hero-image.jpg" alt="Hero Image" class="hero-image">
-            <h1>Hello, <span id="user-name">User</span></h1>
-            <p>Have you checked your glucose level today?</p>
-            <button>Sugar Log</button>
+            <h1>Hello <span id="user-name">User</span>, Have you checked your glucose level today?</h1>
+            <button onclick="location.href='sugar-log.html'">Sugar Log</button>
+        </section>
+
+        <section class="overview">
+            <h2>Your Overview</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3>Diet</h3>
+                    <p id="latest-diet-time">--</p>
+                    <p id="latest-diet-date">--</p>
+                    <button onclick="location.href='diet-log.html'">Diet Tracker</button>
+                </div>
+                <div class="card">
+                    <h3>Exercise</h3>
+                    <p id="latest-exercise-time">--</p>
+                    <p id="latest-exercise-date">--</p>
+                    <button onclick="location.href='exercise-log.html'">Exercise Log</button>
+                </div>
+                <div class="card">
+                    <h3>Sugar Level</h3>
+                    <p id="latest-sugar-level">-- mmol/L</p>
+                    <p id="latest-sugar-date">--</p>
+                    <button onclick="location.href='sugar-log.html'">Sugar Log</button>
+                </div>
+            </div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2025 GlucoGuardian</p>
+        <p>copyright &copy; GlucoGuardian</p>
     </footer>
 
     <script type="module" src="home.js"></script>

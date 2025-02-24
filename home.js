@@ -1,51 +1,51 @@
+import { getFirestore, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 
-// ✅ Initialize Firebase Services
-const auth = getAuth();
 const db = getFirestore();
+const auth = getAuth();
 
-// ✅ Load User Data
-onAuthStateChanged(auth, async (user) => {
-    if (!user) {
-        window.location.href = "index.html"; // ✅ Redirect to welcome page if user is not logged in
-        return;
-    }
+// Function to get the latest log from a specific collection
+async function getLatestLog(collectionName, timeField, dateField, valueField, timeElement, dateElement, valueElement = null) {
+    const user = auth.currentUser;
+    if (!user) return;
 
-    // ✅ Get User's First Name
-    const userDoc = await getDoc(doc(db, "users", user.uid));
-    if (userDoc.exists()) {
-        document.getElementById("user-name").textContent = userDoc.data().firstName || "User";
-    }
+    const logsRef = collection(db, `logs/${user.uid}/${collectionName}`);
+    const q = query(logsRef, orderBy(dateField, "desc"), orderBy(timeField, "desc"), limit(1));
+    const snapshot = await getDocs(q);
 
-    // ✅ Get Latest Diet Log
-    const dietDoc = await getDoc(doc(db, "logs", `diet-${user.uid}`));
-    if (dietDoc.exists()) {
-        document.getElementById("diet-time").textContent = dietDoc.data().time || "--";
-        document.getElementById("diet-date").textContent = dietDoc.data().date || "--";
+    if (!snapshot.empty) {
+        const latestLog = snapshot.docs[0].data();
+        document.getElementById(timeElement).textContent = latestLog[timeField];
+        document.getElementById(dateElement).textContent = latestLog[dateField];
+        if (valueElement) {
+            document.getElementById(valueElement).textContent = latestLog[valueField] + " mmol/L";
+        }
     }
+}
 
-    // ✅ Get Latest Exercise Log
-    const exerciseDoc = await getDoc(doc(db, "logs", `exercise-${user.uid}`));
-    if (exerciseDoc.exists()) {
-        document.getElementById("exercise-time").textContent = exerciseDoc.data().time || "--";
-        document.getElementById("exercise-date").textContent = exerciseDoc.data().date || "--";
-    }
+// Function to load the user's name
+function loadUserName() {
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            const userName = user.displayName ? user.displayName.split(" ")[0] : "User";
+            document.getElementById("user-name").textContent = userName;
+            getLatestLog("diet", "time", "date", null, "latest-diet-time", "latest-diet-date");
+            getLatestLog("exercise", "time", "date", null, "latest-exercise-time", "latest-exercise-date");
+            getLatestLog("sugar", "time", "date", "level", "latest-sugar-level", "latest-sugar-date", "latest-sugar-level");
+        }
+    });
+}
 
-    // ✅ Get Latest Sugar Level Log
-    const sugarDoc = await getDoc(doc(db, "logs", `sugar-${user.uid}`));
-    if (sugarDoc.exists()) {
-        document.getElementById("sugar-level").textContent = sugarDoc.data().level || "-- mmol/l";
-        document.getElementById("sugar-date").textContent = sugarDoc.data().date || "--";
-    }
+// Function to handle sign out
+document.getElementById("signout-btn").addEventListener("click", () => {
+    signOut(auth).then(() => {
+        window.location.href = "index.html";
+    }).catch((error) => {
+        console.error("Error signing out:", error);
+    });
 });
 
-// ✅ Logout Functionality
-document.querySelector(".signout-btn").addEventListener("click", async () => {
-    try {
-        await signOut(auth);
-        window.location.href = "welcome.html"; // ✅ Redirect to welcome page after signing out
-    } catch (error) {
-        console.error("Logout failed:", error);
-    }
+// Load user data on page load
+document.addEventListener("DOMContentLoaded", () => {
+    loadUserName();
 });
