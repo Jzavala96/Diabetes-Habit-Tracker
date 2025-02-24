@@ -14,27 +14,31 @@ onAuthStateChanged(auth, async (user) => {
     }
 });
 
-// ✅ Ensure the "Add Diet" button is clickable
 document.addEventListener("DOMContentLoaded", () => {
+    console.log("✅ DOM fully loaded! Running script...");
+
     const openFormBtn = document.getElementById("open-form-btn");
     const closeFormBtn = document.getElementById("close-form-btn");
     const logForm = document.getElementById("log-form");
 
-    if (openFormBtn && closeFormBtn && logForm) {
-        // ✅ Open form when clicking "Add Diet"
-        openFormBtn.addEventListener("click", () => {
-            logForm.classList.remove("hidden");
-            logForm.style.display = "block"; // ✅ Ensure form becomes visible
-        });
-
-        // ✅ Close form when clicking "Cancel"
-        closeFormBtn.addEventListener("click", () => {
-            logForm.classList.add("hidden");
-            logForm.style.display = "none"; // ✅ Ensure form is hidden again
-        });
-    } else {
-        console.error("Form or button elements not found!");
+    if (!openFormBtn || !closeFormBtn || !logForm) {
+        console.error("❌ ERROR: One or more form elements not found! Check IDs in HTML.");
+        return; // Stop execution if elements are missing
     }
+
+    // ✅ Open form when clicking "Add" button
+    openFormBtn.addEventListener("click", () => {
+        console.log("✅ Add button clicked. Showing form...");
+        logForm.classList.remove("hidden");
+        logForm.style.display = "block";
+    });
+
+    // ✅ Close form when clicking "Cancel"
+    closeFormBtn.addEventListener("click", () => {
+        console.log("✅ Cancel button clicked. Hiding form...");
+        logForm.classList.add("hidden");
+        logForm.style.display = "none";
+    });
 });
 
 // ✅ Handle Form Submission and Save to Firestore
