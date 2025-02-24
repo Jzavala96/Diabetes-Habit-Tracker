@@ -5,61 +5,50 @@ body, h1, p, h2 {
     font-family: 'Arial', sans-serif;
 }
 
+/* ✅ Fix Header & Prevent Overlapping */
 header {
-    display: flex; /* Enables Flexbox */
-    align-items: center; /* Vertically centers the items in the header */
-    justify-content: space-between; /* Positions items on opposite ends */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     background-color: var(--blue);
     color: var(--white);
     padding: 20px;
-}
-
-header .logo {
-    width: 150px; /* Control the width of your logo */
-    height: auto; /* Maintains aspect ratio of the logo */
-}
-
-header .login a {
-    color: var(--white);
-    text-decoration: none;
-    display: flex;
-    align-items: center; /* Ensures the icon aligns nicely with the text */
-}
-
-header .login i {
-    margin-right: 5px; /* Adds spacing between the icon and text */
+    position: fixed; /* Keeps the header fixed */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
 }
 
 /* ✅ Push Content Down Below Header */
 body {
-    padding-top: 80px; /* Ensures no overlap with header */ 
-}
-main {
-    background-color: #edf5d3;
-    display: flex;
+    padding-top: 80px; /* Ensures no overlap with header */
 }
 
-/* ✅ Main Login Container - Full Width & Proper Height */
+/* ✅ Full-Width Background */
+.full-width-bg {
+    width: 100vw; /* Full viewport width */
+    min-height: 100vh; /* Ensure it fills full screen */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ✅ Main Login Container - Full Width */
 .login-container {
     display: flex;
-    justify-content: space-between; /* Spaces login & sign-up evenly */
-    align-items: center;
-    min-height: 100vh; /* Makes sure content fills the screen */
-    width: 90%; /* Keeps layout wide but with a small margin */
-    max-width: 1400px; /* Prevents stretching too much on large screens */
-    margin: auto;
-    gap: 20px;
+    width: 100%; /* Ensures full width */
+    max-width: 1400px; /* Prevents extreme stretching on large screens */
+    height: 100vh; /* Makes sure content fills the screen */
+    align-items: stretch; /* Ensures both sections match height */
 }
 
 /* ✅ Left Side: Login Box */
 .login-box {
     background: #edf5f3;
     padding: 50px;
-    border-radius: 10px;
     text-align: center;
-    flex: 1; /* Allows it to take up majority width */
-    min-width: 400px;
-    height: 100%; /* Ensures it fills the height properly */
+    flex: 1; /* Takes half of the screen */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -103,17 +92,16 @@ button:hover {
     background: #0f4c75;
 }
 
-/* ✅ Right Side: Sign-Up Section */
+/* ✅ Right Side: Sign-Up Section (Full Height & Width) */
 .signup-box {
-    text-align: center;
-    flex: 1;
-    height: 100%; /* Ensures equal height */
+    flex: 1; /* Takes up half of the width */
     background: url('img/logNsign.png') no-repeat center center/cover;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     color: white;
+    text-align: center;
     padding: 40px;
 }
 
@@ -154,10 +142,10 @@ footer {
 }
 
 /* ✅ Responsive Adjustments */
-@media (max-width: 1200px) {
+@media (max-width: 1024px) {
     .login-container {
         flex-direction: column; /* Stack elements for smaller screens */
-        height: auto; /* Adjust height dynamically */
+        height: auto;
     }
 
     .login-box, .signup-box {
