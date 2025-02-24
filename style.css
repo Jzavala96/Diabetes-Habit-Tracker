@@ -93,17 +93,6 @@ button:hover {
     margin-bottom: 10px; /* Spacing between icon and text */
 }
 
-
-button {
-    background-color: var(--green);
-    color: var(--white);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
 footer {
     background-color: var(--footer-color);
     color: var(--white);
