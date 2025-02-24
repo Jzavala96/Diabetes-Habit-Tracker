@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const signupForm = document.getElementById('signup-form');
-    
+
     signupForm.addEventListener('submit', async function(e) {
         e.preventDefault();
 
@@ -21,23 +21,16 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // ✅ Get Firebase Auth from window (Ensures it's initialized)
+        // ✅ Use Firebase Auth from `window`
         const auth = window.firebaseAuth;
         const db = window.firebaseDB;
 
-        if (!auth) {
-            console.error("Firebase Auth is not initialized!");
-            alert("Firebase is not properly initialized. Try refreshing the page.");
-            return;
-        }
-
         try {
-            // ✅ Create user in Firebase Authentication
             const userCredential = await auth.createUserWithEmailAndPassword(email, password);
             const user = userCredential.user;
-            console.log("User created successfully:", user);
+            console.log("User created:", user);
 
-            // ✅ Store additional user info in Firestore
+            // ✅ Store user info in Firestore
             await db.collection("users").doc(user.uid).set({
                 firstName: firstName,
                 lastName: lastName,
@@ -45,8 +38,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 uid: user.uid
             });
 
-            console.log("User info saved to Firestore!");
-            window.location.href = 'login.html'; // ✅ Redirect to login page
+            console.log("User info saved!");
+            window.location.href = 'login.html';
 
         } catch (error) {
             console.error("Error:", error.message);

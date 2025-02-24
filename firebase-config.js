@@ -1,4 +1,9 @@
-// ✅ Initialize Firebase
+// ✅ Use Modular Imports
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+
+// ✅ Firebase Configuration
 const firebaseConfig = {
     apiKey: "AIzaSyCRuRHDJ0GC6vtnSCGAcQCtE9yNaLJ1M_Y",
     authDomain: "glucoguardian-b935a.firebaseapp.com",
@@ -8,11 +13,11 @@ const firebaseConfig = {
     appId: "1:79327666113:web:f0cf092399dd1b6dbd9940"
 };
 
-// ✅ Ensure Firebase is only initialized once
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}
+// ✅ Initialize Firebase (Modular SDK)
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-// ✅ Attach Firebase services to the `window` object so they can be used in other scripts
-window.firebaseAuth = firebase.auth();
-window.firebaseDB = firebase.firestore();
+// ✅ Attach Firebase services to `window` for global access
+window.firebaseAuth = auth;
+window.firebaseDB = db;
