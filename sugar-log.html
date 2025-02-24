@@ -17,7 +17,7 @@
         </nav>
     </header>
 
-    <main>
+    <main class="container">
         <h2>Sugar Level Logs</h2>
         <button id="open-form-btn" class="add-btn">Add Sugar Level</button>
 
@@ -42,9 +42,14 @@
         </div>
 
         <!-- ✅ Logs will be displayed here -->
-        <section id="logs-container"></section>
+        <section id="logs-container" class="logs-container"></section>
     </main>
 
+    <footer>
+        <p>copyright © GlucoGuardian</p>
+    </footer>
+
+    <script type="module" src="firebase-config.js"></script>
     <script type="module" src="sugar-log.js"></script>
 </body>
 </html>

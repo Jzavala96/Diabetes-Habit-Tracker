@@ -17,7 +17,7 @@
         </nav>
     </header>
 
-    <main>
+    <main class="container">
         <h2>Exercise Logs</h2>
         <button id="open-form-btn" class="add-btn">Add Exercise</button>
 
@@ -27,11 +27,11 @@
                 <label for="exercise-time">Total Workout Time:</label>
                 <input type="text" id="exercise-time" required placeholder="e.g., 2 hours 30 minutes">
 
-                <label for="body-weight">Updated Body Weight (lbs):</label>
-                <input type="number" id="body-weight" required>
-
                 <label for="exercise-date">Date:</label>
                 <input type="date" id="exercise-date" required>
+
+                <label for="body-weight">Updated Body Weight (lbs):</label>
+                <input type="number" id="body-weight" required>
 
                 <label for="intensity-level">Intensity Level:</label>
                 <select id="intensity-level" required>
@@ -46,9 +46,14 @@
         </div>
 
         <!-- ✅ Logs will be displayed here -->
-        <section id="logs-container"></section>
+        <section id="logs-container" class="logs-container"></section>
     </main>
 
+    <footer>
+        <p>copyright © GlucoGuardian</p>
+    </footer>
+
+    <script type="module" src="firebase-config.js"></script>
     <script type="module" src="exercise-log.js"></script>
 </body>
 </html>
