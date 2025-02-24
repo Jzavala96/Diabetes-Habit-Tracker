@@ -63,6 +63,7 @@ body {
     flex-direction: column;
     justify-content: center; /* Center content vertically in the box */
     align-items: center; /* Center content horizontally */
+    background-color: #edf5f3;
 }
 
 /* ✅ Face ID Icon Centered */
