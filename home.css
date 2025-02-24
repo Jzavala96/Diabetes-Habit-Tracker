@@ -1,54 +1,136 @@
-/* Home Page Styling */
+/* ✅ General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-}
-
-header {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    background-color: #004080;
+    background-color: #222;
     color: white;
 }
 
-header .logo {
-    width: 150px;
+/* ✅ Header & Navigation */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    padding: 20px;
 }
 
-header nav {
+header .logo {
+    width: 100px;
+}
+
+nav {
     display: flex;
+    align-items: center;
     gap: 15px;
 }
 
-header nav a {
+nav a {
     color: white;
     text-decoration: none;
     font-size: 16px;
 }
 
-.hero {
-    background: url('img/hero-image.jpg') no-repeat center center;
-    background-size: cover;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
+nav .logout {
+    color: red;
+}
+
+.fa-user {
+    font-size: 18px;
     color: white;
 }
 
-.hero h1 {
-    font-size: 3rem;
+/* ✅ Hero Section */
+.hero {
+    position: relative;
+    text-align: center;
 }
 
-.hero p {
-    font-size: 1.5rem;
+.hero-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
 }
 
+.hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.hero-text h1 {
+    font-size: 2rem;
+}
+
+.sugar-log-btn {
+    background-color: #7CB518;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* ✅ Overview Section */
+.overview {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: white;
+    color: black;
+}
+
+.overview h2 {
+    color: #7CB518;
+    font-size: 24px;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.card {
+    background: #004080;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    width: 200px;
+}
+
+.card h3 {
+    font-size: 18px;
+}
+
+.time, .sugar-level {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.date {
+    font-size: 14px;
+}
+
+.tracker-btn {
+    background: #7CB518;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+}
+
+/* ✅ Footer */
 footer {
     text-align: center;
+    background-color: black;
     padding: 10px;
-    background-color: #f1f1f1;
+}
+
+footer img {
+    width: 40px;
 }
