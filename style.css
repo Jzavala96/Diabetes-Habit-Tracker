@@ -111,7 +111,7 @@ footer {
         width: 80px; /* Smaller icon size for mobile devices */
     }
     .hero {
-        height: auto; /* Adjusts height dynamically based on content */
+        height: 912; /* Adjusts height dynamically based on content */
         padding: 50px 0; /* Adds vertical padding */
     }
 
@@ -127,7 +127,7 @@ footer {
 
     button {
         font-size: 14px; /* Smaller font size for mobile */
-        padding: 10px 20px; /* Slightly less padding to fit smaller screens */
+        padding: 10px 10px; /* Slightly less padding to fit smaller screens */
         width: 100%; /* Full width button can be easier to tap */
     }
 }
