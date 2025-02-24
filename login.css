@@ -177,7 +177,7 @@ footer {
     }
 
     .login-box, .signup-box {
-        width: 100%;
+        width: 90%;
         max-width: 400px;
         padding: 30px;
         min-height: 450px; /* Adjust for smaller mobile screens */
