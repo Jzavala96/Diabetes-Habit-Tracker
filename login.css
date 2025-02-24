@@ -1,0 +1,129 @@
+/* Basic Reset */
+body, h1, p, h2, h3 {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: var(--off-white);
+    color: var(--black);
+    padding: 20px;
+}
+
+header {
+    display: flex; /* Enables Flexbox */
+    align-items: center; /* Vertically centers the items in the header */
+    justify-content: space-between; /* Positions items on opposite ends */
+    background-color: var(--blue);
+    color: var(--white);
+    padding: 20px;
+}
+
+header .logo {
+    width: 150px; /* Control the width of your logo */
+    height: auto; /* Maintains aspect ratio of the logo */
+}
+
+header .login a {
+    color: var(--white);
+    text-decoration: none;
+    display: flex;
+    align-items: center; /* Ensures the icon aligns nicely with the text */
+}
+
+header .login i {
+    margin-right: 5px; /* Adds spacing between the icon and text */
+}
+
+/* Main Login Container */
+.login-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80vh;
+    padding: 40px;
+}
+
+/* Login Box */
+.login-box {
+    background: #edf5f3;
+    padding: 40px;
+    border-radius: 10px;
+    text-align: center;
+    width: 50%;
+}
+
+.login-box h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.biometric-icon {
+    width: 60px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+/* Input Fields */
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Sign In Button */
+button {
+    width: 100%;
+    padding: 12px;
+    background: #1f6ea1;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0f4c75;
+}
+
+/* Signup Box */
+.signup-box {
+    text-align: center;
+    padding: 40px;
+    width: 40%;
+    background: url('img/signup-bg.jpg') no-repeat center center/cover;
+    color: white;
+}
+
+.signup-box h2 {
+    font-size: 24px;
+}
+
+.signup-button {
+    display: inline-block;
+    background: #96c44e;
+    padding: 12px 24px;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.signup-button:hover {
+    background: #7a9b3f;
+}
+
+/* Mobile View */
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .login-box, .signup-box {
+        width: 90%;
+        margin-bottom: 20px;
+    }
+}
