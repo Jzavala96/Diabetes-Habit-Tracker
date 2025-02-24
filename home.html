@@ -10,17 +10,25 @@
 <body>
     <header>
         <img src="img/logo.png" alt="GlucoGuardian Logo" class="logo">
-        <nav>
-            <a href="diet-log.html">Diet Tracker</a>
-            <a href="exercise-log.html">Exercise Logs</a>
-            <a href="sugar-log.html">Sugar Logs</a>
-            <button id="signout-btn">Sign Out</button>
+        
+        <!-- ✅ Hamburger Menu -->
+        <button class="hamburger-menu" id="menu-toggle">
+            <i class="fa-solid fa-bars"></i> <!-- FontAwesome Icon -->
+        </button>
+    
+        <!-- ✅ Navigation Menu -->
+        <nav id="nav-menu">
+            <a href="home.html">Home</a>
+            <a href="exercise-log.html">Exercise Log</a>
+            <a href="diet-log.html">Diet Log</a>
+            <a href="sugar-log.html">Sugar Log</a>
+            <button class="signout-btn">Sign Out</button>
         </nav>
     </header>
 
     <main class="home-container">
         <section class="hero">
-            <img src="img/hero-image.jpg" alt="Hero Image" class="hero-image">
+            <img src="img/homeImg.jpg" alt="Hero Image" class="hero-image">
             <h1>Hello <span id="user-name">User</span>, Have you checked your glucose level today?</h1>
             <button onclick="location.href='sugar-log.html'">Sugar Log</button>
         </section>
