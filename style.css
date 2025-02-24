@@ -62,6 +62,7 @@ button {
     background-color: #96c44e; /* Green button */
     color: white;
     border: none;
+    margin-top: 25px;
     padding: 12px 24px; /* Slightly increased padding for better readability */
     border-radius: 20px; /* More pronounced rounded corners */
     cursor: pointer;
@@ -125,7 +126,8 @@ footer {
     }
 
     button {
-        font-size: 14px; /* Smaller button text on small screens */
-        padding: 10px 20px; /* Adjusts padding for smaller screens */
+        font-size: 14px; /* Smaller font size for mobile */
+        padding: 10px 20px; /* Slightly less padding to fit smaller screens */
+        width: 100%; /* Full width button can be easier to tap */
     }
 }
