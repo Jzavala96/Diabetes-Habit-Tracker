@@ -47,25 +47,22 @@ body {
 /* ✅ Main Login Container - Full Width */
 .login-container {
     display: flex;
-    width: 90%; /* Ensures full width */
-    max-width: 1400px; /* Prevents extreme stretching on large screens */
-    height:90vh; /* Makes sure content fills the screen */
-    align-items: center; /* Ensures both sections match height */
+    width: 100%; /* Full width of the viewport */
+    height: 100vh; /* Full height of the viewport */
+    justify-content: center; /* Centers content horizontally */
+    align-items: center; /* Centers content vertically */
+    flex-direction: row; /* Arrange items in a row */
 }
 
-/* ✅ Left Side: Login Box */
+/* Left Side: Login Box */
 .login-box {
-    background: #edf5f3;
-    padding: 50px;
-    text-align: center;
     flex: 1; /* Takes half of the screen */
-    min-width: 400px;
-    max-width: 50%;
+    min-width: 300px; /* Minimum width */
+    max-width: 50%; /* Maximum width to ensure it does not stretch too much */
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    justify-content: center;
-    height: 100%; /* Ensure it matches signup box height */
+    justify-content: center; /* Center content vertically in the box */
+    align-items: center; /* Center content horizontally */
 }
 
 /* ✅ Face ID Icon Centered */
