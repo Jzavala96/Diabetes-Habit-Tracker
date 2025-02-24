@@ -1,4 +1,4 @@
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, updateDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
 
 // ✅ Initialize Firebase services
@@ -24,10 +24,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const openFormBtn = document.getElementById("open-form-btn");
     const closeFormBtn = document.getElementById("close-form-btn");
     const logForm = document.getElementById("log-form");
+    const dietForm = document.getElementById("diet-form");
+
+    let editMode = false;
+    let editLogId = null;
 
     if (openFormBtn && closeFormBtn && logForm) {
         openFormBtn.addEventListener("click", () => {
             console.log("✅ Add Diet Clicked!");
+            editMode = false;
+            editLogId = null;
+            dietForm.reset();
             logForm.classList.remove("hidden");
             logForm.style.display = "block";
         });
@@ -45,6 +52,69 @@ document.addEventListener("DOMContentLoaded", () => {
     auth.onAuthStateChanged((user) => {
         if (user) {
             loadLogs();
+        }
+    });
+
+    // ✅ Function to save or update a log
+    dietForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const user = auth.currentUser;
+        if (!user) return;
+
+        const mealDetails = document.getElementById("meal-details").value;
+        const mealHour = document.getElementById("meal-hour").value;
+        const mealMinute = document.getElementById("meal-minute").value;
+        const mealPeriod = document.getElementById("meal-period").value;
+        const mealDate = document.getElementById("meal-date").value;
+        const snackLabel = document.getElementById("snack-label").value || "None";
+        const selectedMeal = document.getElementById("selected-meal").value;
+        const mealTime = `${mealHour}:${mealMinute} ${mealPeriod}`;
+
+        if (!selectedMeal) {
+            alert("❌ Please select a meal type before saving.");
+            return;
+        }
+
+        try {
+            if (editMode && editLogId) {
+                // ✅ Update existing log
+                await updateDoc(doc(db, `logs/${user.uid}/diet`, editLogId), {
+                    details: mealDetails,
+                    time: mealTime,
+                    date: mealDate,
+                    mealType: selectedMeal,
+                    snackLabel: snackLabel
+                });
+            } else {
+                // ✅ Save new log
+                const docRef = await addDoc(collection(db, `logs/${user.uid}/diet`), {
+                    details: mealDetails,
+                    time: mealTime,
+                    date: mealDate,
+                    mealType: selectedMeal,
+                    snackLabel: snackLabel
+                });
+
+                document.getElementById("logs-container").prepend(
+                    createLogCard(docRef.id, {
+                        details: mealDetails,
+                        time: mealTime,
+                        date: mealDate,
+                        mealType: selectedMeal,
+                        snackLabel: snackLabel
+                    })
+                );
+            }
+
+            // ✅ Close form and reset
+            dietForm.reset();
+            logForm.style.display = "none";
+            editMode = false;
+            editLogId = null;
+            loadLogs();
+        } catch (error) {
+            console.error("❌ Error saving log:", error);
         }
     });
 });
@@ -72,12 +142,13 @@ function createLogCard(id, data) {
     card.innerHTML = `
         <div class="log-header">
             <h3>${data.date}</h3>
-            <button class="delete-btn" data-id="${id}">❌</button>
+            <button class="delete-btn" data-id="${id}">✖</button>
         </div>
         <p><strong>Details:</strong> ${data.details}</p>
         <p><strong>Time:</strong> ${data.time}</p>
         <p><strong>Meal Type:</strong> ${data.mealType || "Not Specified"}</p>
         <p><strong>Snack Label:</strong> ${data.snackLabel || "None"}</p>
+        <button class="edit-btn" data-id="${id}">Edit</button>
     `;
 
     // ✅ Delete button functionality
@@ -86,54 +157,29 @@ function createLogCard(id, data) {
         loadLogs();
     });
 
+    // ✅ Edit button functionality
+    card.querySelector(".edit-btn").addEventListener("click", async () => {
+        console.log("📝 Edit Clicked!");
+        const user = auth.currentUser;
+        if (!user) return;
+
+        const docRef = doc(db, `logs/${user.uid}/diet`, id);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            document.getElementById("meal-details").value = data.details;
+            document.getElementById("meal-hour").value = data.time.split(":")[0];
+            document.getElementById("meal-minute").value = data.time.split(":")[1].split(" ")[0];
+            document.getElementById("meal-period").value = data.time.split(" ")[1];
+            document.getElementById("meal-date").value = data.date;
+            document.getElementById("snack-label").value = data.snackLabel || "None";
+
+            editMode = true;
+            editLogId = id;
+            document.getElementById("log-form").style.display = "block";
+        }
+    });
+
     return card;
 }
-
-// ✅ Function to save a new log
-document.getElementById("diet-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const user = auth.currentUser;
-    if (!user) return;
-
-    const mealDetails = document.getElementById("meal-details").value;
-    const mealHour = document.getElementById("meal-hour").value;
-    const mealMinute = document.getElementById("meal-minute").value;
-    const mealPeriod = document.getElementById("meal-period").value;
-    const mealDate = document.getElementById("meal-date").value;
-    const snackLabel = document.getElementById("snack-label").value || "None";
-    const selectedMeal = document.getElementById("selected-meal").value;
-    const mealTime = `${mealHour}:${mealMinute} ${mealPeriod}`;
-
-    if (!selectedMeal) {
-        alert("❌ Please select a meal type before saving.");
-        return;
-    }
-
-    try {
-        const docRef = await addDoc(collection(db, `logs/${user.uid}/diet`), {
-            details: mealDetails,
-            time: mealTime,
-            date: mealDate,
-            mealType: selectedMeal,
-            snackLabel: snackLabel
-        });
-
-        // ✅ Add log card to the list immediately instead of showing an alert
-        const newLog = createLogCard(docRef.id, {
-            details: mealDetails,
-            time: mealTime,
-            date: mealDate,
-            mealType: selectedMeal,
-            snackLabel: snackLabel
-        });
-        document.getElementById("logs-container").prepend(newLog);
-
-        // ✅ Close form after saving
-        document.getElementById("diet-form").reset();
-        logForm.style.display = "none";
-
-    } catch (error) {
-        console.error("❌ Error saving log:", error);
-    }
-});
