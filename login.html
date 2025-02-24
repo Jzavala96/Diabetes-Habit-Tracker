@@ -9,9 +9,7 @@
 </head>
 <body>
     <header>
-        <a href="index.html">
-            <img src="img/logo.png" alt="GlucoGuardian Logo" class="logo">
-        </a>
+        <img src="img/logo.png" alt="GlucoGuardian Logo" class="logo">
         <div class="login">
             <a href="login.html"><i class="fa-solid fa-user"></i> Login</a>
         </div>
@@ -21,7 +19,9 @@
         <div class="login-box">
             <h2>Login to Your Account</h2>
             <p>Login Using Face ID</p>
-            <img src="img/faceId.png" alt="Face ID Icon" class="biometric-icon" id="biometric-btn">
+            <div class="face-id-container">
+                <img src="img/face-id.png" alt="Face ID Icon" class="biometric-icon" id="biometric-btn">
+            </div>
 
             <form id="login-form">
                 <input type="email" id="email" placeholder="Email" required>

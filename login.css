@@ -5,18 +5,31 @@ body, h1, p, h2 {
     font-family: 'Arial', sans-serif;
 }
 
-/* Header */
+/* Header - Reverting to your original version */
 header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    background-color: var(--blue);
+    color: var(--white);
     padding: 20px;
-    background: #1f6ea1;
-    color: white;
 }
 
 header .logo {
-    width: 150px;
+    width: 150px; /* Ensures logo size */
+    height: auto;
+}
+
+header .login a {
+    color: var(--white);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+header .login i {
+    font-size: 18px;
 }
 
 /* Main Login Container */
@@ -48,11 +61,18 @@ header .logo {
     margin-bottom: 15px;
 }
 
-/* Face ID Icon */
+/* Centering Face ID Icon */
+.face-id-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px 0; /* Adds space between text and icon */
+}
+
 .biometric-icon {
     width: 60px;
+    height: auto;
     cursor: pointer;
-    margin: 15px 0;
 }
 
 /* Input Fields */
@@ -84,7 +104,7 @@ button:hover {
     text-align: center;
     width: 50%;
     height: 935px; /* Match image height */
-    background: url('img/logNsign.png') no-repeat center center/cover; /* Updated background */
+    background: url('img/logNsign.png') no-repeat center center/cover;
     display: flex;
     flex-direction: column;
     justify-content: center; /* Center content */
