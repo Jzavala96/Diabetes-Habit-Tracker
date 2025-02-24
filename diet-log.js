@@ -111,7 +111,7 @@ document.getElementById("diet-form").addEventListener("submit", async (e) => {
     }
 
     try {
-        await addDoc(collection(db, `logs/${user.uid}/diet`), {
+        const docRef = await addDoc(collection(db, `logs/${user.uid}/diet`), {
             details: mealDetails,
             time: mealTime,
             date: mealDate,
@@ -119,10 +119,20 @@ document.getElementById("diet-form").addEventListener("submit", async (e) => {
             snackLabel: snackLabel
         });
 
-        alert("✅ Diet log saved!");
-        document.getElementById("diet-form").reset(); // ✅ Clear form
-        logForm.style.display = "none"; // ✅ Hide form after saving
-        loadLogs(); // ✅ Reload logs
+        // ✅ Add log card to the list immediately instead of showing an alert
+        const newLog = createLogCard(docRef.id, {
+            details: mealDetails,
+            time: mealTime,
+            date: mealDate,
+            mealType: selectedMeal,
+            snackLabel: snackLabel
+        });
+        document.getElementById("logs-container").prepend(newLog);
+
+        // ✅ Close form after saving
+        document.getElementById("diet-form").reset();
+        logForm.style.display = "none";
+
     } catch (error) {
         console.error("❌ Error saving log:", error);
     }

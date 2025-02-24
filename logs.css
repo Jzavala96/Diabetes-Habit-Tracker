@@ -5,6 +5,10 @@ body {
     padding: 0;
     background-color: #f4f4f4;
 }
+/* ✅ Ensure the main content expands to push footer down */
+.container {
+    flex: 1; /* Expands to fill space */
+}
 
 header {
     display: flex; /* Enables Flexbox */
@@ -194,9 +198,13 @@ nav a {
 }
 
 
+/* ✅ Fix Footer to Bottom */
 footer {
     background-color: #908e8e;
-    color: var(--white);
+    color: white;
     text-align: center;
     padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
