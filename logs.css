@@ -35,11 +35,24 @@ header .login a {
 header .login i {
     margin-right: 5px; /* Adds spacing between the icon and text */
 }
+nav {
+    display: flex;
+    gap: 15px;
+}
 
 nav a {
     color: black;
     text-decoration: none;
     margin: 0 10px;
+}
+/* ✅ Hamburger Menu Button */
+.hamburger-menu {
+    display: none; /* Hidden on desktop */
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
 }
 
 .signout-btn {
@@ -212,4 +225,33 @@ footer {
     position: relative;
     bottom: 0;
    
+}
+/* ✅ Mobile & Tablet Styles */
+@media (max-width: 768px) {
+    .hamburger-menu {
+        display: block; /* Show hamburger icon */
+    }
+
+    nav {
+        display: none; /* Hide nav by default */
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background-color: var(--blue);
+        width: 100%;
+        text-align: center;
+        padding: 15px 0;
+    }
+
+    nav a, .signout-btn {
+        display: block;
+        padding: 10px;
+        color: white;
+    }
+
+    /* ✅ Show Navigation When Open */
+    nav.show {
+        display: flex;
+    }
 }
