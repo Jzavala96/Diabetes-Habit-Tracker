@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // ✅ Correct way to sign in user in Firebase Modular SDK
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             console.log("✅ Logged in:", userCredential.user);
-            window.location.href = "dashboard.html"; // ✅ Redirect on success
+            window.location.href = "home.html"; // ✅ Redirect on success
         } catch (error) {
             console.error("❌ Login Error:", error.message);
             alert("Login failed: " + error.message);
