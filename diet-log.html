@@ -21,17 +21,41 @@
         <h2>Diet Logs</h2>
         <button id="open-form-btn" class="add-btn">Add Diet</button>
 
-        <!-- ✅ Hidden Form (Popup) -->
-        <div id="log-form" class="popup-form hidden">
-            <form id="diet-form">
-                <label for="meal-time">Time:</label>
-                <input type="time" id="meal-time" required>
+     <!-- ✅ Hidden Form (Popup) -->
+<div id="log-form" class="popup-form hidden">
+    <form id="diet-form">
+        <h3>Diet Log</h3>
 
-                <label for="meal-date">Date:</label>
-                <input type="date" id="meal-date" required>
+        <!-- ✅ Meal Details -->
+        <label for="meal-details">Add details of what was eaten:</label>
+        <textarea id="meal-details" required></textarea>
 
-                <label for="meal-details">Meal Details:</label>
-                <textarea id="meal-details" required></textarea>
+             <!-- ✅ Time Selector -->
+             <label for="meal-time">Time:</label>
+             <div style="display: flex; gap: 10px;">
+                 <input type="number" id="meal-hour" min="1" max="12" required placeholder="HH">
+                 <input type="number" id="meal-minute" min="0" max="59" required placeholder="MM">
+                 <select id="meal-period">
+                     <option value="AM">AM</option>
+                     <option value="PM">PM</option>
+                 </select>
+             </div>
+
+             <!-- ✅ Meal Time Options -->
+             <label>Meal Time:</label>
+             <div class="meal-time-options">
+                 <button type="button">Breakfast</button>
+                 <button type="button">Lunch</button>
+                 <button type="button">Dinner</button>
+             </div>
+
+             <!-- ✅ Date Selector -->
+             <label for="meal-date">Date:</label>
+             <input type="date" id="meal-date" required>
+
+                <!-- ✅ Snack Label -->
+                <label for="snack-label">Snack Label:</label>
+                <input type="text" id="snack-label">
 
                 <button type="submit">Save Log</button>
                 <button type="button" id="close-form-btn">Cancel</button>
