@@ -21,17 +21,23 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // ✅ Get Firebase Auth and Firestore
+        // ✅ Get Firebase Auth from window (Ensures it's initialized)
         const auth = window.firebaseAuth;
         const db = window.firebaseDB;
 
+        if (!auth) {
+            console.error("Firebase Auth is not initialized!");
+            alert("Firebase is not properly initialized. Try refreshing the page.");
+            return;
+        }
+
         try {
-            // ✅ Create user
+            // ✅ Create user in Firebase Authentication
             const userCredential = await auth.createUserWithEmailAndPassword(email, password);
             const user = userCredential.user;
-            console.log("User created:", user);
+            console.log("User created successfully:", user);
 
-            // ✅ Store additional user info
+            // ✅ Store additional user info in Firestore
             await db.collection("users").doc(user.uid).set({
                 firstName: firstName,
                 lastName: lastName,
@@ -40,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             console.log("User info saved to Firestore!");
-            window.location.href = 'login.html'; // Redirect to login
+            window.location.href = 'login.html'; // ✅ Redirect to login page
 
         } catch (error) {
             console.error("Error:", error.message);

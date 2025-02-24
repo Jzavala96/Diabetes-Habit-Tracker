@@ -1,5 +1,4 @@
-
-// Your web app's Firebase configuration
+// ✅ Initialize Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyCRuRHDJ0GC6vtnSCGAcQCtE9yNaLJ1M_Y",
     authDomain: "glucoguardian-b935a.firebaseapp.com",
@@ -7,16 +6,13 @@ const firebaseConfig = {
     storageBucket: "glucoguardian-b935a.appspot.com",
     messagingSenderId: "79327666113",
     appId: "1:79327666113:web:f0cf092399dd1b6dbd9940"
-  };
-  
- // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-  
- // Initialize other Firebase services as needed
- const auth = getAuth(app);
- const db = getFirestore(app);
+};
 
+// ✅ Ensure Firebase is only initialized once
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
 
- window.firebaseAuth = auth;
- window.firebaseDB = db;
-  
+// ✅ Attach Firebase services to the `window` object so they can be used in other scripts
+window.firebaseAuth = firebase.auth();
+window.firebaseDB = firebase.firestore();
