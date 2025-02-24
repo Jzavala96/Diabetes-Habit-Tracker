@@ -3,33 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GlucoGuardian</title>
+    <title>Welcome to GlucoGuardian</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
 </head>
 <body>
     <header>
-        <h1>Welcome to GlucoGuardian</h1>
-        <nav>
-            <ul>
-                <li><a href="#diet">Diet Tracker</a></li>
-                <li><a href="#exercise">Exercise Log</a></li>
-                <li><a href="#sugar">Sugar Level Log</a></li>
-            </ul>
-        </nav>
+        <img src="img/logo.png" alt="GlucoGuardian Logo" class="logo">
+        <div class="login">
+            <a href="login.html"><i class="fa-solid fa-user"></i>Login</a>
+        </div>
     </header>
+
     <main>
-        <section id="diet"> <!-- Diet section -->
-            <h2>Diet Tracker</h2>
-            <!-- Content will be added here -->
-        </section>
-        <section id="exercise"> <!-- Exercise section -->
-            <h2>Exercise Log</h2>
-            <!-- Content will be added here -->
-        </section>
-        <section id="sugar"> <!-- Sugar level section -->
-            <h2>Sugar Level Log</h2>
-            <!-- Content will be added here -->
+        <div class="hero">
+            <h1>Welcome to GlucoGuardian, your partner in Diabetes Management!</h1>
+            <p>Let’s take a positive step together today.</p>
+            <button onclick="location.href='signup.html'">Sign Up</button>
+        </div>
+
+        <section class="features">
+            <div class="feature">
+                <i class="fa-solid fa-worm"></i>
+                <h3>Diet Tracker</h3>
+                <p>With our diet tracking you are able to see what food you are eating and how it may be affecting your levels of sugar helping you make a better informed decisions.</p>
+            </div>
+            <div class="feature">
+                <i class="fa-solid fa-dumbbell"></i>
+                <h3>Exercise Log</h3>
+                <p>With our logging system for your levels of exercise it can show how it impacts your sugar levels and since you can track the diet as well you can see how both impact the levels.</p>
+            </div>
+            <div class="feature">
+                <i class="fa-solid fa-cubes-stacked"></i>
+                <h3>Sugar Level Log</h3>
+                <p>With our logging system for your sugar levels you will be able to keep track of how your sugar is throughout the day.</p>
+            </div>
         </section>
     </main>
     <footer>
