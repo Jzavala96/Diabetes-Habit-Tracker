@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sugar Level Logs | GlucoGuardian</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="logs.css">
 </head>
 <body>
@@ -28,18 +29,23 @@
 
     <main class="container">
         <h2>Sugar Level Logs</h2>
-        <button id="open-form-btn" class="add-btn">Add Sugar Level</button>
+        <button id="open-form-btn" class="add-btn">Add Sugar Log</button>
 
         <!-- ✅ Hidden Form (Popup) -->
         <div id="log-form" class="popup-form hidden">
             <form id="sugar-form">
                 <label for="sugar-level">Sugar Level (mmol/L):</label>
-                <input type="number" id="sugar-level" required>
+                <input type="number" id="sugar-level" step="0.1" required>
 
-                <label for="medication">Medication:</label>
-                <input type="text" id="medication">
+                <label>Medication:</label>
+                <div class="medication-buttons">
+                    <button type="button" class="med-btn" data-med="Pills">Pills</button>
+                    <button type="button" class="med-btn" data-med="Insulin">Insulin</button>
+                    <button type="button" class="med-btn" data-med="Both">Both</button>
+                </div>
+                <input type="hidden" id="selected-med" required>
 
-                <label for="insulin-units">Insulin Amount (units):</label>
+                <label for="insulin-units">Insulin Units:</label>
                 <input type="number" id="insulin-units">
 
                 <label for="sugar-date">Date:</label>
@@ -53,6 +59,7 @@
         <!-- ✅ Logs will be displayed here -->
         <section id="logs-container" class="logs-container"></section>
     </main>
+
 
     <footer>
         <p>copyright © GlucoGuardian</p>
