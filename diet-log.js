@@ -20,14 +20,13 @@ async function loadLogs() {
     });
 }
 
-// ✅ Function to create a log card
 function createLogCard(id, data) {
     const card = document.createElement("div");
     card.classList.add("log-card");
 
     card.innerHTML = `
         <div class="log-header">
-            <strong>Date:</strong> ${data.date}
+            <h3>${data.date}</h3>
             <button class="delete-btn" data-id="${id}">❌</button>
         </div>
         <p><strong>Details:</strong> ${data.details}</p>
@@ -44,6 +43,7 @@ function createLogCard(id, data) {
 
     return card;
 }
+
 
 // ✅ Function to save a new log
 document.getElementById("diet-form").addEventListener("submit", async (e) => {

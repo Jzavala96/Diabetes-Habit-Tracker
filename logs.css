@@ -78,35 +78,111 @@ nav a {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     text-align: left;
+    position: relative;
 }
 
+/* ✅ Log Header (Date & Delete Button) */
+.log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #004080;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+/* ✅ Delete Button */
+.delete-btn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.delete-btn:hover {
+    background: darkred;
+}
+
+/* ✅ Log Card Title (H3) */
 .log-card h3 {
     margin: 0;
     font-size: 18px;
     color: #004080;
 }
 
+/* ✅ Log Card Text */
 .log-card p {
     margin: 5px 0;
     font-size: 14px;
 }
 
-/* ✅ Popup Form */
+
+/* ✅ FORM STYLING: Match Mockup */
 .popup-form {
-    position: fixed;
+    position: fixed;  /* ✅ Center Form */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 50%;  /* ✅ Adjust width */
+    max-width: 600px;
     background: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    display: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
 }
 
+/* ✅ Hide Form by Default */
 .hidden {
     display: none;
 }
+
+/* ✅ Improve Input Fields */
+.popup-form input,
+.popup-form select,
+.popup-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* ✅ Improve Buttons */
+.popup-form button {
+    background: #007BFF;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.popup-form button:hover {
+    background: #0056b3;
+}
+
+/* ✅ Meal Time Buttons (Breakfast, Lunch, Dinner) */
+.meal-time-options button {
+    background: #5cb85c;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.meal-time-options button:hover {
+    background: #4cae4c;
+}
+
 footer {
     background-color: #908e8e;
     color: var(--white);
