@@ -75,23 +75,58 @@ button:hover {
 }
 
 
+/* Features Section */
+.features {
+    text-align: left; /* Aligns text to the left for a structured layout */
+    padding: 40px 20px; /* Adds spacing around the section */
+    background: var(--off-white); /* Matches background with your theme */
+}
+
+/* Features Intro (Title & Description) */
+.features-intro {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Aligns the title and description */
+    flex-wrap: wrap; /* Prevents overlapping on small screens */
+    margin-bottom: 30px; /* Space between intro and feature cards */
+}
+
+.features-intro h2 {
+    font-size: 28px; /* Adjusted for emphasis */
+    color: var(--green); /* Matches theme */
+    flex: 1; /* Takes available space */
+}
+
+.features-intro p {
+    font-size: 16px;
+    color: var(--blue); /* Adjusts color for better readability */
+    max-width: 500px; /* Limits width for better readability */
+    text-align: right; /* Aligns the description text to the right */
+    flex: 1; /* Takes available space */
+}
+
+/* Feature Cards */
 .feature {
-    margin-top: 20px;
+    display: inline-block;
+    width: 30%; /* Ensures three cards fit in one row */
+    margin: 10px;
     padding: 20px;
     border-radius: 8px;
     background-color: var(--white);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+    text-align: center; /* Centers the text inside */
 }
 
+/* Feature Icons */
 .feature img {
-    /* Ensure icons are responsive */
-    width: 100px; /* Adjust size as needed */
+    width: 80px; /* Adjust size as needed */
     height: auto;
 }
 
 .feature i {
-    color: var(--blue); /* Use your color variable */
-    font-size: 24px; /* Larger icon size */
-    margin-bottom: 10px; /* Spacing between icon and text */
+    color: var(--blue);
+    font-size: 30px; /* Slightly larger */
+    margin-bottom: 10px;
 }
 
 footer {
@@ -129,5 +164,20 @@ footer {
         font-size: 14px; /* Smaller font size for mobile */
         padding: 10px 10px; /* Slightly less padding to fit smaller screens */
         width: 30%; /* Full width button can be easier to tap */
+    }
+    .features-intro {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .features-intro h2, 
+    .features-intro p {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .feature {
+        width: 100%; /* Stack cards on small screens */
+        margin: 15px 0;
     }
 }
