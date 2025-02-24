@@ -5,6 +5,11 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth
 const db = getFirestore();
 const auth = getAuth();
 
+// ✅ Track Edit State & Selected Log ID
+let editMode = false;
+let editLogId = null;
+
+
 document.addEventListener("DOMContentLoaded", () => {
     console.log("✅ JavaScript Loaded!");
 
@@ -157,29 +162,46 @@ function createLogCard(id, data) {
         loadLogs();
     });
 
-    // ✅ Edit button functionality
-    card.querySelector(".edit-btn").addEventListener("click", async () => {
-        console.log("📝 Edit Clicked!");
-        const user = auth.currentUser;
-        if (!user) return;
+ // ✅ Edit button functionality
+card.querySelector(".edit-btn").addEventListener("click", async () => {
+    console.log("📝 Edit Clicked!");
 
-        const docRef = doc(db, `logs/${user.uid}/diet`, id);
-        const docSnap = await getDoc(docRef);
+    const user = auth.currentUser;
+    if (!user) return;
 
-        if (docSnap.exists()) {
-            const data = docSnap.data();
-            document.getElementById("meal-details").value = data.details;
-            document.getElementById("meal-hour").value = data.time.split(":")[0];
-            document.getElementById("meal-minute").value = data.time.split(":")[1].split(" ")[0];
-            document.getElementById("meal-period").value = data.time.split(" ")[1];
-            document.getElementById("meal-date").value = data.date;
-            document.getElementById("snack-label").value = data.snackLabel || "None";
+    const docRef = doc(db, `logs/${user.uid}/diet`, id);
+    const docSnap = await getDoc(docRef);
 
-            editMode = true;
-            editLogId = id;
-            document.getElementById("log-form").style.display = "block";
-        }
-    });
+    if (docSnap.exists()) {
+        const data = docSnap.data();
+
+        // ✅ Populate form with existing data
+        document.getElementById("meal-details").value = data.details;
+        document.getElementById("meal-hour").value = data.time.split(":")[0];
+        document.getElementById("meal-minute").value = data.time.split(":")[1].split(" ")[0];
+        document.getElementById("meal-period").value = data.time.split(" ")[1];
+        document.getElementById("meal-date").value = data.date;
+        document.getElementById("snack-label").value = data.snackLabel || "None";
+
+        // ✅ Select correct meal type button
+        const mealButtons = document.querySelectorAll(".meal-btn");
+        mealButtons.forEach(btn => {
+            if (btn.getAttribute("data-meal") === data.mealType) {
+                btn.classList.add("selected");
+            } else {
+                btn.classList.remove("selected");
+            }
+        });
+
+        // ✅ Set Edit Mode & Log ID
+        editMode = true;
+        editLogId = id;
+
+        // ✅ Show Form
+        document.getElementById("log-form").style.display = "block";
+    }
+});
+
 
     return card;
 }
