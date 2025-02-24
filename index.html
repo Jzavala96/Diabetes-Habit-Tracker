@@ -3,11 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diabetes Habit Tracker</title>
+    <title>GlucoGuardian</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
 </head>
 <body>
-    <h1>Welcome to Your Diabetes Habit Tracker</h1>
-    <script src="script.js"></script>
+    <header>
+        <h1>Welcome to GlucoGuardian</h1>
+        <nav>
+            <ul>
+                <li><a href="#diet">Diet Tracker</a></li>
+                <li><a href="#exercise">Exercise Log</a></li>
+                <li><a href="#sugar">Sugar Level Log</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="diet"> <!-- Diet section -->
+            <h2>Diet Tracker</h2>
+            <!-- Content will be added here -->
+        </section>
+        <section id="exercise"> <!-- Exercise section -->
+            <h2>Exercise Log</h2>
+            <!-- Content will be added here -->
+        </section>
+        <section id="sugar"> <!-- Sugar level section -->
+            <h2>Sugar Level Log</h2>
+            <!-- Content will be added here -->
+        </section>
+    </main>
+    <footer>
+        <p>Copyright @GlucoGuardian</p>
+    </footer>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+  
+        const firebaseConfig = {
+          apiKey: "AIzaSyCRuRHDJ0GC6vtnSCGAcQCtE9yNaLJ1M_Y",
+          authDomain: "glucoguardian-b935a.firebaseapp.com",
+          projectId: "glucoguardian-b935a",
+          storageBucket: "glucoguardian-b935a.firebasestorage.app",
+          messagingSenderId: "79327666113",
+          appId: "1:79327666113:web:f0cf092399dd1b6dbd9940"
+        };
+  
+        const app = initializeApp(firebaseConfig);
+      </script>
+
 </body>
 </html>
