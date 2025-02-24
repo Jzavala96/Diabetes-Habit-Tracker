@@ -82,7 +82,7 @@ button:hover {
     align-items: stretch; /* Ensures all cards have equal height */
     flex-wrap: wrap; /* Allows wrapping for smaller screens */
     gap: 20px; /* Adds spacing between feature cards */
-    padding: 40px 20px;
+    padding: 60px 40px;
     background: #edf5f3; /* Matches background with your theme */
 }
 
@@ -115,7 +115,7 @@ button:hover {
     flex: 1; /* Ensures all cards take equal width */
     min-width: 30%; /* Ensures three cards fit in one row */
     max-width: 32%; /* Prevents them from getting too big */
-    padding: 20px;
+    padding: 35px;
     border-radius: 8px;
     background-color: #1f6ea1; /* Sets background to blue */
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -135,6 +135,17 @@ footer {
     color: var(--white);
     text-align: center;
     padding: 10px;
+}
+@media (max-width: 1679px) {
+    .features {
+        justify-content: center; /* Centers items */
+        flex-wrap: wrap; /* Allows breaking while keeping it aligned */
+    }
+
+    .feature {
+        width: 45%; /* Makes 2 cards fit in one row */
+        margin: 10px; /* Ensures proper spacing */
+    }
 }
 
 /* Responsive adjustments */
