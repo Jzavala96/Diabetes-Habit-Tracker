@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up | GlucoGuardian</title>
-    <link rel="stylesheet" href="login.css"> <!-- Assuming using the same CSS file -->
+    <link rel="stylesheet" href="login.css"> 
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
+
 </head>
 <body>
     <header>
@@ -23,7 +26,7 @@
                 <input type="text" id="last-name" placeholder="Last Name" required>
                 <input type="email" id="email" placeholder="Email" required>
                 <input type="email" id="confirm-email" placeholder="Confirm Email" required>
-                <input type="password" id="password" placeholder="Password" required>
+                <input type="password" id="password" placeholder="Create Password" required>
                 <input type="password" id="confirm-password" placeholder="Confirm Password" required>
                 <button type="submit">Sign Up</button>
             </form>
@@ -40,6 +43,7 @@
         <p>Copyright &copy; GlucoGuardian</p>
     </footer>
 
-    <script src="signup.js"></script> <!-- If needed -->
+    <script src="firebase-config.js"></script>
+    <script src="signup.js"></script>
 </body>
 </html>
