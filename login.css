@@ -64,7 +64,7 @@ body {
     justify-content: center; /* Center content vertically in the box */
     align-items: center; /* Center content horizontally */
     background-color: #edf5f3;
-    padding: 50px;
+    padding: 80px 50px;
 }
 
 /* ✅ Face ID Icon Centered */
