@@ -6,14 +6,29 @@ body {
     background-color: #f4f4f4;
 }
 
-/* ✅ Navigation */
 header {
+    display: flex; /* Enables Flexbox */
+    align-items: center; /* Vertically centers the items in the header */
+    justify-content: space-between; /* Positions items on opposite ends */
+    background-color: var(--blue);
+    color: var(--white);
+    padding: 20px;
+}
+
+header .logo {
+    width: 150px; /* Control the width of your logo */
+    height: auto; /* Maintains aspect ratio of the logo */
+}
+
+header .login a {
+    color: var(--white);
+    text-decoration: none;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #004080;
-    padding: 15px;
-    color: white;
+    align-items: center; /* Ensures the icon aligns nicely with the text */
+}
+
+header .login i {
+    margin-right: 5px; /* Adds spacing between the icon and text */
 }
 
 nav a {
@@ -91,4 +106,10 @@ nav a {
 
 .hidden {
     display: none;
+}
+footer {
+    background-color: #908e8e;
+    color: var(--white);
+    text-align: center;
+    padding: 10px;
 }
