@@ -93,13 +93,17 @@ button:hover {
 .signup-box {
     text-align: center;
     padding: 40px;
+    height: 935px ;
     width: 40%;
     background: url('img/logNsign.png') no-repeat center center/cover;
     color: white;
 }
 
 .signup-box h2 {
-    font-size: 24px;
+    font-size: 48px;
+}
+.signup-box h4 {
+    font-size: 35px;
 }
 
 .signup-button {
