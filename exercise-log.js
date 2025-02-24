@@ -1,74 +1,168 @@
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
-import { getFirestore, doc, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, updateDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
 
-// ✅ Initialize Firebase Services
-const auth = getAuth();
+// ✅ Initialize Firebase services
 const db = getFirestore();
+const auth = getAuth();
 
-// ✅ Handle User Authentication
-onAuthStateChanged(auth, async (user) => {
-    if (!user) {
-        window.location.href = "index.html"; // Redirect if not logged in
-    } else {
-        loadLogs(user.uid); // ✅ Load existing logs for this user
-    }
-});
+// ✅ Track Edit State & Selected Log ID
+let editMode = false;
+let editLogId = null;
 
-// ✅ Open & Close Popup Form
-document.getElementById("open-form-btn").addEventListener("click", () => {
-    document.getElementById("log-form").classList.remove("hidden");
-});
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("✅ JavaScript Loaded!");
 
-document.getElementById("close-form-btn").addEventListener("click", () => {
-    document.getElementById("log-form").classList.add("hidden");
-});
+    // ✅ Show/Hide Add Exercise Form
+    const openFormBtn = document.getElementById("open-form-btn");
+    const closeFormBtn = document.getElementById("close-form-btn");
+    const logForm = document.getElementById("log-form");
+    const exerciseForm = document.getElementById("exercise-form");
 
-// ✅ Handle Form Submission
-document.getElementById("exercise-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const exerciseTime = document.getElementById("exercise-time").value;
-    const bodyWeight = document.getElementById("body-weight").value;
-    const exerciseDate = document.getElementById("exercise-date").value;
-    const intensityLevel = document.getElementById("intensity-level").value;
-
-    const user = auth.currentUser;
-
-    try {
-        // ✅ Save log to Firestore under the user’s logs
-        await addDoc(collection(db, `logs/${user.uid}/exercise`), {
-            time: exerciseTime,
-            weight: bodyWeight,
-            date: exerciseDate,
-            intensity: intensityLevel
+    if (openFormBtn && closeFormBtn && logForm) {
+        openFormBtn.addEventListener("click", () => {
+            console.log("✅ Add Exercise Clicked!");
+            editMode = false;
+            editLogId = null;
+            exerciseForm.reset();
+            logForm.classList.remove("hidden");
+            logForm.style.display = "block";
         });
 
-        alert("Exercise log saved!");
-        document.getElementById("log-form").classList.add("hidden"); // Close form
-        loadLogs(user.uid); // Refresh logs
-    } catch (error) {
-        console.error("Error saving log:", error);
+        closeFormBtn.addEventListener("click", () => {
+            console.log("✅ Cancel Clicked!");
+            logForm.classList.add("hidden");
+            logForm.style.display = "none";
+        });
+    } else {
+        console.error("❌ ERROR: Form elements not found!");
     }
+
+    // ✅ Load logs on page load
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            loadLogs();
+        }
+    });
+
+    // ✅ Function to save or update a log
+    exerciseForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const user = auth.currentUser;
+        if (!user) return;
+
+        const workoutDetails = document.getElementById("workout-details").value;
+        const workoutHour = document.getElementById("workout-hour").value;
+        const workoutMinute = document.getElementById("workout-minute").value;
+        const bodyWeight = document.getElementById("body-weight").value;
+        const workoutDate = document.getElementById("workout-date").value;
+        const intensityLevel = document.getElementById("intensity-level").value;
+        const workoutTime = `${workoutHour}h ${workoutMinute}m`;
+
+        try {
+            if (editMode && editLogId) {
+                // ✅ Update existing log
+                await updateDoc(doc(db, `logs/${user.uid}/exercise`, editLogId), {
+                    details: workoutDetails,
+                    time: workoutTime,
+                    date: workoutDate,
+                    weight: bodyWeight,
+                    intensity: intensityLevel
+                });
+            } else {
+                // ✅ Save new log
+                const docRef = await addDoc(collection(db, `logs/${user.uid}/exercise`), {
+                    details: workoutDetails,
+                    time: workoutTime,
+                    date: workoutDate,
+                    weight: bodyWeight,
+                    intensity: intensityLevel
+                });
+
+                document.getElementById("logs-container").prepend(
+                    createLogCard(docRef.id, {
+                        details: workoutDetails,
+                        time: workoutTime,
+                        date: workoutDate,
+                        weight: bodyWeight,
+                        intensity: intensityLevel
+                    })
+                );
+            }
+
+            // ✅ Close form and reset
+            exerciseForm.reset();
+            logForm.style.display = "none";
+            editMode = false;
+            editLogId = null;
+            loadLogs();
+        } catch (error) {
+            console.error("❌ Error saving log:", error);
+        }
+    });
 });
 
-// ✅ Load Existing Logs from Firestore
-async function loadLogs(userId) {
+// ✅ Function to load logs
+async function loadLogs() {
+    const user = auth.currentUser;
+    if (!user) return;
+
     const logsContainer = document.getElementById("logs-container");
-    logsContainer.innerHTML = ""; // Clear previous logs
+    logsContainer.innerHTML = ""; // Clear logs before loading new ones
 
-    const logsSnapshot = await getDocs(collection(db, `logs/${userId}/exercise`));
-
-    logsSnapshot.forEach((doc) => {
-        const log = doc.data();
-        const logElement = document.createElement("div");
-        logElement.classList.add("log-card");
-        logElement.innerHTML = `
-            <h3>Date: ${log.date}</h3>
-            <p><strong>Workout Duration:</strong> ${log.time}</p>
-            <p><strong>Body Weight:</strong> ${log.weight} lbs</p>
-            <p><strong>Intensity Level:</strong> ${log.intensity}</p>
-        `;
-        logsContainer.appendChild(logElement);
+    const querySnapshot = await getDocs(collection(db, `logs/${user.uid}/exercise`));
+    querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        logsContainer.appendChild(createLogCard(doc.id, data));
     });
 }
 
+// ✅ Function to create a log card
+function createLogCard(id, data) {
+    const card = document.createElement("div");
+    card.classList.add("log-card");
+
+    card.innerHTML = `
+        <div class="log-header">
+            <h3>${data.date}</h3>
+            <button class="delete-btn" data-id="${id}">✖</button>
+        </div>
+        <p><strong>Details:</strong> ${data.details}</p>
+        <p><strong>Time:</strong> ${data.time}</p>
+        <p><strong>Weight:</strong> ${data.weight} lbs</p>
+        <p><strong>Intensity Level:</strong> ${data.intensity}</p>
+        <button class="edit-btn" data-id="${id}">Edit</button>
+    `;
+
+    // ✅ Delete button functionality
+    card.querySelector(".delete-btn").addEventListener("click", async () => {
+        await deleteDoc(doc(db, `logs/${auth.currentUser.uid}/exercise`, id));
+        loadLogs();
+    });
+
+    // ✅ Edit button functionality
+    card.querySelector(".edit-btn").addEventListener("click", async () => {
+        console.log("📝 Edit Clicked!");
+        const user = auth.currentUser;
+        if (!user) return;
+
+        const docRef = doc(db, `logs/${user.uid}/exercise`, id);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            document.getElementById("workout-details").value = data.details;
+            document.getElementById("workout-hour").value = data.time.split("h")[0];
+            document.getElementById("workout-minute").value = data.time.split("h")[1].split("m")[0];
+            document.getElementById("body-weight").value = data.weight;
+            document.getElementById("workout-date").value = data.date;
+            document.getElementById("intensity-level").value = data.intensity;
+
+            editMode = true;
+            editLogId = id;
+            document.getElementById("log-form").style.display = "block";
+        }
+    });
+
+    return card;
+}
