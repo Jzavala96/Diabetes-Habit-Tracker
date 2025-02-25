@@ -1,16 +1,13 @@
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, updateDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
 
-// ✅ Initialize Firebase services
 const db = getFirestore();
 const auth = getAuth();
 
-// ✅ Track Edit State & Selected Log ID
 let editMode = false;
 let editLogId = null;
 
 document.addEventListener("DOMContentLoaded", () => {
-    // ✅ Hamburger Menu Toggle
     const menuToggle = document.getElementById("menu-toggle");
     const navMenu = document.getElementById("nav-menu");
 
@@ -20,24 +17,24 @@ document.addEventListener("DOMContentLoaded", () => {
             document.body.classList.toggle("no-scroll"); 
         });
     } else {
-        console.error("❌ ERROR: Menu toggle button or nav menu not found.");
+        console.error("ERROR: Menu toggle button or nav menu not found.");
     }
 
-    // ✅ Sign Out Functionality
+    //Sign Out
     const signOutBtn = document.getElementById("signout-btn");
     if (signOutBtn) {
         signOutBtn.addEventListener("click", () => {
             signOut(auth).then(() => {
-                window.location.href = "login.html"; // Redirect to login after sign-out
+                window.location.href = "login.html"; 
             }).catch((error) => {
-                console.error("❌ Error signing out:", error);
+                console.error("Error signing out:", error);
             });
         });
     } else {
-        console.error("❌ Sign-out button not found!");
+        console.error("Sign-out button not found!");
     }
 
-    // ✅ Meal Selection Logic
+    // Meal Selection
     const mealButtons = document.querySelectorAll(".meal-btn");
     const selectedMealInput = document.getElementById("selected-meal");
 
@@ -49,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // ✅ Show/Hide Add Diet Form
+    // Show/Hide Add Diet Form
     const openFormBtn = document.getElementById("open-form-btn");
     const closeFormBtn = document.getElementById("close-form-btn");
     const logForm = document.getElementById("log-form");
@@ -57,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (openFormBtn && closeFormBtn && logForm) {
         openFormBtn.addEventListener("click", () => {
-            console.log("✅ Add Diet Clicked!");
+            console.log("Add Diet Clicked!");
             editMode = false;
             editLogId = null;
             dietForm.reset();
@@ -66,22 +63,22 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         closeFormBtn.addEventListener("click", () => {
-            console.log("✅ Cancel Clicked!");
+            console.log("Cancel Clicked!");
             logForm.classList.add("hidden");
             logForm.style.display = "none";
         });
     } else {
-        console.error("❌ ERROR: Form elements not found!");
+        console.error("ERROR: Form elements not found!");
     }
 
-    // ✅ Load logs on page load
+    // Load logs on page load
     auth.onAuthStateChanged((user) => {
         if (user) {
             loadLogs();
         }
     });
 
-    // ✅ Function to save or update a log
+    // save or update a log
     dietForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
@@ -98,13 +95,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const mealTime = `${mealHour}:${mealMinute} ${mealPeriod}`;
 
         if (!selectedMeal) {
-            alert("❌ Please select a meal type before saving.");
+            alert("Please select a meal type before saving.");
             return;
         }
 
         try {
             if (editMode && editLogId) {
-                // ✅ Update existing log
+
                 await updateDoc(doc(db, `logs/${user.uid}/diet`, editLogId), {
                     details: mealDetails,
                     time: mealTime,
@@ -113,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     snackLabel: snackLabel
                 });
             } else {
-                // ✅ Save new log
+
                 const docRef = await addDoc(collection(db, `logs/${user.uid}/diet`), {
                     details: mealDetails,
                     time: mealTime,
@@ -133,7 +130,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
             }
 
-            // ✅ Close form and reset
             dietForm.reset();
             logForm.style.display = "none";
             editMode = false;
@@ -145,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// ✅ Function to load logs
+// load logs
 async function loadLogs() {
     const user = auth.currentUser;
     if (!user) return;
@@ -160,7 +156,7 @@ async function loadLogs() {
     });
 }
 
-// ✅ Function to create a log card
+//log card
 function createLogCard(id, data) {
     const card = document.createElement("div");
     card.classList.add("log-card");
@@ -177,13 +173,13 @@ function createLogCard(id, data) {
         <button class="edit-btn" data-id="${id}">Edit</button>
     `;
 
-    // ✅ Delete button functionality
+    // Delete button 
     card.querySelector(".delete-btn").addEventListener("click", async () => {
         await deleteDoc(doc(db, `logs/${auth.currentUser.uid}/diet`, id));
         loadLogs();
     });
 
-    // ✅ Edit button functionality
+    // Edit button 
     card.querySelector(".edit-btn").addEventListener("click", async () => {
         console.log("📝 Edit Clicked!");
 
@@ -196,7 +192,6 @@ function createLogCard(id, data) {
         if (docSnap.exists()) {
             const data = docSnap.data();
 
-            // ✅ Populate form with existing data
             document.getElementById("meal-details").value = data.details;
             document.getElementById("meal-hour").value = data.time.split(":")[0];
             document.getElementById("meal-minute").value = data.time.split(":")[1].split(" ")[0];
@@ -204,7 +199,7 @@ function createLogCard(id, data) {
             document.getElementById("meal-date").value = data.date;
             document.getElementById("snack-label").value = data.snackLabel || "None";
 
-            // ✅ Select correct meal type button
+            //Select meal type button
             const mealButtons = document.querySelectorAll(".meal-btn");
             mealButtons.forEach(btn => {
                 if (btn.getAttribute("data-meal") === data.mealType) {

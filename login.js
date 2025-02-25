@@ -1,4 +1,3 @@
-// ✅ Import Firebase services correctly
 import { auth } from "./firebase-config.js";
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
 
@@ -12,12 +11,11 @@ document.addEventListener("DOMContentLoaded", function () {
         const password = document.getElementById("password").value;
 
         try {
-            // ✅ Correct way to sign in user in Firebase Modular SDK
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            console.log("✅ Logged in:", userCredential.user);
-            window.location.href = "home.html"; // ✅ Redirect on success
+            console.log("Logged in:", userCredential.user);
+            window.location.href = "home.html"; 
         } catch (error) {
-            console.error("❌ Login Error:", error.message);
+            console.error("Login Error:", error.message);
             alert("Login failed: " + error.message);
         }
     });

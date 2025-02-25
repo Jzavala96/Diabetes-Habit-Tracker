@@ -29,12 +29,12 @@ document.addEventListener("DOMContentLoaded", function () {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
-            // ✅ Set display name in Firebase Auth
+            //display name in Firebase Auth
             await updateProfile(user, {
                 displayName: firstName
             });
 
-            // ✅ Store user info in Firestore
+            // user info in Firestore
             await setDoc(doc(db, "users", user.uid), {
                 firstName: firstName,
                 lastName: lastName,
@@ -42,10 +42,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 uid: user.uid
             });
 
-            console.log("✅ User info saved!");
+            console.log("User info saved!");
             window.location.href = "login.html";
         } catch (error) {
-            console.error("❌ Error:", error.message);
+            console.error("Error:", error.message);
             alert("Error: " + error.message);
         }
     });
