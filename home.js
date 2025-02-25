@@ -1,66 +1,76 @@
-import { getFirestore, collection, query, orderBy, limit, getDocs } from 
-    "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
-import { getAuth, onAuthStateChanged, signOut } from 
-    "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+import { getFirestore, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
 
 const db = getFirestore();
 const auth = getAuth();
 
-// ✅ Function to get the latest log from a Firestore collection
+// ✅ Function to get the latest log from Firestore
 async function getLatestLog(collectionName, timeField, dateField, valueField, timeElement, dateElement, valueElement = null) {
     const user = auth.currentUser;
-    if (!user) return;
+    if (!user) {
+        console.log("❌ No authenticated user.");
+        return;
+    }
 
+    // ✅ Reference to Firestore collection
     const logsRef = collection(db, `logs/${user.uid}/${collectionName}`);
+
+    // ✅ Query for the most recent entry (sorted by date and time in descending order)
     const q = query(logsRef, orderBy(dateField, "desc"), orderBy(timeField, "desc"), limit(1));
-    const snapshot = await getDocs(q);
 
-    if (!snapshot.empty) {
-        const latestLog = snapshot.docs[0].data();
+    try {
+        const snapshot = await getDocs(q);
 
-        document.getElementById(timeElement).textContent = latestLog[timeField] || "--";
-        document.getElementById(dateElement).textContent = latestLog[dateField] || "--";
+        if (!snapshot.empty) {
+            const latestLog = snapshot.docs[0].data();
+            console.log(`✅ Latest ${collectionName} Log:`, latestLog); // Debugging
 
-        if (valueElement) {
-            document.getElementById(valueElement).textContent = latestLog[valueField] + (collectionName === "sugar" ? " mmol/L" : "");
+            // ✅ Update UI elements
+            document.getElementById(timeElement).textContent = latestLog[timeField] || "--";
+            document.getElementById(dateElement).textContent = latestLog[dateField] || "--";
+            
+            if (valueElement) {
+                document.getElementById(valueElement).textContent = latestLog[valueField] + " mmol/L";
+            }
+        } else {
+            console.log(`⚠️ No logs found for ${collectionName}`);
         }
-    } else {
-        console.log(`No logs found for ${collectionName}`);
+    } catch (error) {
+        console.error(`❌ Error fetching ${collectionName} log:`, error);
     }
 }
 
-// ✅ Load the user's name
+// ✅ Function to load the user's name
 function loadUserName() {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
         if (user) {
-            // Fetch first name from Firebase Authentication or Firestore
-            const userRef = collection(db, "users");
-            getDocs(userRef).then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    if (doc.id === user.uid) {
-                        const data = doc.data();
-                        document.getElementById("user-name").textContent = data.firstName || "User";
-                    }
-                });
-            });
+            // ✅ Fetch user's first name from Firestore
+            const userDocRef = collection(db, "users");
+            const userQuery = query(userDocRef, orderBy("uid"), limit(1));
+            const userSnapshot = await getDocs(userQuery);
 
-            // ✅ Get the latest logs for Diet, Exercise, and Sugar Level
+            if (!userSnapshot.empty) {
+                const userData = userSnapshot.docs[0].data();
+                document.getElementById("user-name").textContent = userData.firstName || "User";
+            } else {
+                document.getElementById("user-name").textContent = "User";
+            }
+
+            // ✅ Fetch latest logs for each category
             getLatestLog("diet", "time", "date", null, "latest-diet-time", "latest-diet-date");
-            getLatestLog("exercise", "time", "date", "duration", "latest-exercise-time", "latest-exercise-date");
-            getLatestLog("sugar", "time", "date", "level", "latest-sugar-level", "latest-sugar-date", "latest-sugar-level");
+            getLatestLog("exercise", "time", "date", null, "latest-exercise-time", "latest-exercise-date");
+            getLatestLog("sugar", "logTime", "sugarDate", "sugarLevel", "latest-sugar-level", "latest-sugar-date", "latest-sugar-level");
         }
     });
 }
 
-// ✅ Function to handle sign out
+// ✅ Function to handle sign-out
 document.getElementById("signout-btn").addEventListener("click", () => {
-    signOut(auth)
-        .then(() => {
-            window.location.href = "index.html";
-        })
-        .catch((error) => {
-            console.error("Error signing out:", error);
-        });
+    signOut(auth).then(() => {
+        window.location.href = "index.html";
+    }).catch((error) => {
+        console.error("❌ Error signing out:", error);
+    });
 });
 
 // ✅ Load user data on page load
