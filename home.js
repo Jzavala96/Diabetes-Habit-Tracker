@@ -83,4 +83,16 @@ document.getElementById("signout-btn").addEventListener("click", () => {
  */
 document.addEventListener("DOMContentLoaded", () => {
     loadUserName();
+
+    // ✅ Hamburger Menu Toggle
+    const menuToggle = document.getElementById("menu-toggle");
+    const navMenu = document.getElementById("nav-menu");
+
+    if (menuToggle && navMenu) {
+        menuToggle.addEventListener("click", () => {
+            navMenu.classList.toggle("show");
+        });
+    } else {
+        console.error("❌ ERROR: Menu toggle button or nav menu not found.");
+    }
 });
