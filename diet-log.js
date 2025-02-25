@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
             editLogId = null;
             loadLogs();
         } catch (error) {
-            console.error("❌ Error saving log:", error);
+            console.error("Error saving log:", error);
         }
     });
 });

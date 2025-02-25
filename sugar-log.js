@@ -1,18 +1,16 @@
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, updateDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
 
-// ✅ Initialize Firebase services
 const db = getFirestore();
 const auth = getAuth();
 
-// ✅ Track Edit State & Selected Log ID
 let editMode = false;
 let editLogId = null;
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("✅ JavaScript Loaded!");
+    console.log("JavaScript Loaded!");
 
-    // ✅ Medication Selection Logic
+    // Medication Selection 
     const medButtons = document.querySelectorAll(".med-btn");
     const selectedMedInput = document.getElementById("selected-med");
 
@@ -24,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // ✅ Time of Day Selection Logic
+    //Time of Day Selection
     const timeButtons = document.querySelectorAll(".time-btn");
     const selectedTimeInput = document.getElementById("selected-time");
 
@@ -36,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // ✅ Show/Hide Add Sugar Log Form
+    // Show/Hide Add Sugar Log Form
     const openFormBtn = document.getElementById("open-form-btn");
     const closeFormBtn = document.getElementById("close-form-btn");
     const logForm = document.getElementById("log-form");
@@ -57,14 +55,14 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ✅ Load logs on page load
+    // Load logs on page load
     auth.onAuthStateChanged((user) => {
         if (user) {
             loadLogs();
         }
     });
 
-    // ✅ Function to save or update a log
+    // save or update a log
     sugarForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
@@ -79,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const logTime = `${document.getElementById("log-hour").value}:${document.getElementById("log-minute").value} ${document.getElementById("log-period").value}` || "Not Specified";
 
         if (!selectedMed || !selectedTime) {
-            alert("❌ Please select medication and time of day.");
+            alert("Please select medication and time of day.");
             return;
         }
 
@@ -105,12 +103,12 @@ document.addEventListener("DOMContentLoaded", () => {
             editLogId = null;
             loadLogs();
         } catch (error) {
-            console.error("❌ Error saving log:", error);
+            console.error("Error saving log:", error);
         }
     });
 });
 
-// ✅ Function to load logs
+// load logs
 async function loadLogs() {
     const user = auth.currentUser;
     if (!user) return;
@@ -125,7 +123,7 @@ async function loadLogs() {
     });
 }
 
-// ✅ Function to create a log card
+// create a log card
 function createLogCard(id, data) {
     const card = document.createElement("div");
     card.classList.add("log-card");
@@ -143,13 +141,13 @@ function createLogCard(id, data) {
         <button class="edit-btn" data-id="${id}">Edit</button>
     `;
 
-    // ✅ Delete button functionality
+    // Delete button 
     card.querySelector(".delete-btn").addEventListener("click", async () => {
         await deleteDoc(doc(db, `logs/${auth.currentUser.uid}/sugar`, id));
         loadLogs();
     });
 
-    // ✅ Edit button functionality
+    // Edit button
     card.querySelector(".edit-btn").addEventListener("click", async () => {
         console.log("📝 Edit Clicked!");
 
@@ -162,7 +160,6 @@ function createLogCard(id, data) {
         if (docSnap.exists()) {
             const data = docSnap.data();
 
-            // ✅ Populate form with existing data
             document.getElementById("sugar-level").value = data.sugarLevel;
             document.getElementById("selected-med").value = data.medication;
             document.getElementById("insulin-units").value = data.insulinUnits;
@@ -172,7 +169,7 @@ function createLogCard(id, data) {
             document.getElementById("log-minute").value = data.logTime ? data.logTime.split(":")[1].split(" ")[0] : "";
             document.getElementById("log-period").value = data.logTime ? data.logTime.split(" ")[1] : "";
 
-            // ✅ Select correct time of day
+            //Select correct time of day
             const timeButtons = document.querySelectorAll(".time-btn");
             timeButtons.forEach(btn => {
                 if (btn.getAttribute("data-time") === data.selectedTime) {

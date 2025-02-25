@@ -8,44 +8,43 @@ let editMode = false;
 let editLogId = null;
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("✅ JavaScript Loaded!");
+    console.log("JavaScript Loaded!");
 
-    // ✅ Hamburger Menu Toggle
     const menuToggle = document.getElementById("menu-toggle");
     const navMenu = document.getElementById("nav-menu");
 
     if (menuToggle && navMenu) {
         menuToggle.addEventListener("click", () => {
-            console.log("✅ Menu Toggled");
+            console.log(" Menu Toggled");
             navMenu.classList.toggle("show");
             document.body.classList.toggle("no-scroll"); 
         });
     } else {
-        console.error("❌ ERROR: Menu toggle button or nav menu not found.");
+        console.error("ERROR: Menu toggle button or nav menu not found.");
     }
 
-    // ✅ Sign Out Button
+    // Sign Out Button
     const signOutBtn = document.getElementById("signout-btn");
     if (signOutBtn) {
         signOutBtn.addEventListener("click", () => {
             signOut(auth).then(() => {
                 window.location.href = "login.html";
             }).catch((error) => {
-                console.error("❌ Error signing out:", error);
+                console.error("Error signing out:", error);
             });
         });
     } else {
-        console.error("❌ Sign-out button not found!");
+        console.error("Sign-out button not found!");
     }
 
-    // ✅ Load logs on page load
+    //Load logs on page load
     auth.onAuthStateChanged((user) => {
         if (user) {
             loadLogs();
         }
     });
 
-    // ✅ Save or update a log
+    //Save or update a log
     const exerciseForm = document.getElementById("exercise-form");
     if (exerciseForm) {
         exerciseForm.addEventListener("submit", async (e) => {
@@ -87,28 +86,25 @@ document.addEventListener("DOMContentLoaded", () => {
                 editLogId = null;
                 loadLogs();
             } catch (error) {
-                console.error("❌ Error saving log:", error);
+                console.error("Error saving log:", error);
             }
         });
     } else {
-        console.error("❌ ERROR: Exercise form not found!");
+        console.error("ERROR: Exercise form not found!");
     }
 });
 
-/**
- * ✅ Load logs from Firestore
- */
 async function loadLogs() {
     const user = auth.currentUser;
     if (!user) return;
 
     const logsContainer = document.getElementById("logs-container");
     if (!logsContainer) {
-        console.error("❌ ERROR: Logs container not found.");
+        console.error("ERROR: Logs container not found.");
         return;
     }
 
-    logsContainer.innerHTML = ""; // Clear logs before loading new ones
+    logsContainer.innerHTML = ""; 
 
     const querySnapshot = await getDocs(collection(db, `logs/${user.uid}/exercise`));
     querySnapshot.forEach((doc) => {
@@ -116,9 +112,6 @@ async function loadLogs() {
     });
 }
 
-/**
- * ✅ Create a log card element
- */
 function createLogCard(id, data) {
     const card = document.createElement("div");
     card.classList.add("log-card");
@@ -135,7 +128,7 @@ function createLogCard(id, data) {
         <button class="edit-btn" data-id="${id}">Edit</button>
     `;
 
-    // ✅ Delete button functionality
+    //Delete button 
     card.querySelector(".delete-btn").addEventListener("click", async () => {
         await deleteDoc(doc(db, `logs/${auth.currentUser.uid}/exercise`, id));
         loadLogs();
