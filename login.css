@@ -74,6 +74,17 @@ body {
     align-items: center;
     margin: 15px 0;
 }
+.face-id-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: none; /* Default hidden */
+    margin-top: 10px;
+}
+
+.face-id-button img {
+    width: 50px;
+}
 
 .biometric-icon {
     width: 60px;
@@ -171,6 +182,9 @@ footer {
 }
 
 @media (max-width: 768px) {
+    .face-id-button {
+        display: block;
+    }
     .login-container {
         flex-direction: column;
         padding-bottom: 60px; /* Prevents content from touching footer */
