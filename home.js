@@ -4,6 +4,9 @@ import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/fi
 const db = getFirestore();
 const auth = getAuth();
 
+/**
+ * ✅ Fetch the most recent log from Firestore
+ */
 async function getLatestLog(collectionName, timeField, dateField, valueField, timeElement, dateElement, valueElement = null) {
     const user = auth.currentUser;
     if (!user) {
@@ -14,7 +17,7 @@ async function getLatestLog(collectionName, timeField, dateField, valueField, ti
     // ✅ Reference to Firestore collection
     const logsRef = collection(db, `logs/${user.uid}/${collectionName}`);
 
-    // ✅ Query for the most recent entry (sorted by date & time)
+    // ✅ Query for the most recent entry (sorted by date first, then time)
     const q = query(logsRef, orderBy(dateField, "desc"), orderBy(timeField, "desc"), limit(1));
 
     try {
@@ -39,12 +42,13 @@ async function getLatestLog(collectionName, timeField, dateField, valueField, ti
     }
 }
 
-
-// ✅ Function to load the user's name
+/**
+ * ✅ Load the user's first name from Firestore
+ */
 async function loadUserName() {
     onAuthStateChanged(auth, async (user) => {
         if (user) {
-            // ✅ Fetch user's first name from Firestore (now uses correct document path)
+            // ✅ Fetch user's first name from Firestore
             const userDocRef = doc(db, "users", user.uid);
             const userSnapshot = await getDoc(userDocRef);
 
@@ -55,17 +59,17 @@ async function loadUserName() {
                 document.getElementById("user-name").textContent = "User";
             }
 
-            // ✅ Fetch latest logs for each category (dynamically using correct fields)
-          // ✅ Fetch latest logs for each category
+            // ✅ Fetch latest logs for each category
             getLatestLog("diet", "time", "date", null, "latest-diet-time", "latest-diet-date");
             getLatestLog("exercise", "time", "date", null, "latest-exercise-time", "latest-exercise-date");
             getLatestLog("sugar", "logTime", "sugarDate", "sugarLevel", "latest-sugar-level", "latest-sugar-date", "latest-sugar-level");
-
         }
     });
 }
 
-// ✅ Function to handle sign-out
+/**
+ * ✅ Handle sign-out
+ */
 document.getElementById("signout-btn").addEventListener("click", () => {
     signOut(auth).then(() => {
         window.location.href = "index.html";
@@ -74,7 +78,9 @@ document.getElementById("signout-btn").addEventListener("click", () => {
     });
 });
 
-// ✅ Load user data on page load
+/**
+ * ✅ Load user data on page load
+ */
 document.addEventListener("DOMContentLoaded", () => {
     loadUserName();
 });
