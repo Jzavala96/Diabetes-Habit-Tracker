@@ -192,11 +192,4 @@ function createLogCard(id, data) {
 
     return card;
 }
-  // ✅ Function to handle sign-out
-  document.getElementById("signout-btn").addEventListener("click", () => {
-    signOut(auth).then(() => {
-        window.location.href = "index.html";
-    }).catch((error) => {
-        console.error("❌ Error signing out:", error);
-    });
-});
+
