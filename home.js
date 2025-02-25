@@ -16,7 +16,8 @@ async function getLatestLog(collectionName, timeField, dateField, valueField, ti
     const logsRef = collection(db, `logs/${user.uid}/${collectionName}`);
 
     // ✅ Query for the most recent entry (sorted by date and time in descending order)
-    const q = query(logsRef, orderBy(dateField, "desc"), orderBy(timeField, "desc"), limit(1));
+    const q = query(logsRef, orderBy("sugarDate", "desc"), limit(1));
+
 
     try {
         const snapshot = await getDocs(q);
