@@ -79,6 +79,17 @@ header .logo {
     font-size: 16px;
     border-radius: 5px;
 }
+.overview {
+    text-align: center;
+    margin: 30px auto;
+}
+
+.overview h2 {
+    color: #2176FF; 
+    font-size: 32px; 
+    font-weight: bold;
+    text-align: center;
+}
 
 .card-container {
     display: flex;

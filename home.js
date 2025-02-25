@@ -1,10 +1,12 @@
-import { getFirestore, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+import { getFirestore, collection, query, orderBy, limit, getDocs } from 
+    "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, signOut } from 
+    "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
 
 const db = getFirestore();
 const auth = getAuth();
 
-// ✅ Function to get the latest log from Firestore
+// ✅ Function to get the latest log from a Firestore collection
 async function getLatestLog(collectionName, timeField, dateField, valueField, timeElement, dateElement, valueElement = null) {
     const user = auth.currentUser;
     if (!user) return;
@@ -15,42 +17,50 @@ async function getLatestLog(collectionName, timeField, dateField, valueField, ti
 
     if (!snapshot.empty) {
         const latestLog = snapshot.docs[0].data();
-        console.log(`Latest ${collectionName} log:`, latestLog);
 
         document.getElementById(timeElement).textContent = latestLog[timeField] || "--";
         document.getElementById(dateElement).textContent = latestLog[dateField] || "--";
 
         if (valueElement) {
-            document.getElementById(valueElement).textContent = latestLog[valueField] + " mmol/L" || "--";
+            document.getElementById(valueElement).textContent = latestLog[valueField] + (collectionName === "sugar" ? " mmol/L" : "");
         }
     } else {
-        console.log(`No data found for ${collectionName}`);
+        console.log(`No logs found for ${collectionName}`);
     }
 }
 
-// ✅ Function to load the user's name from Firebase Auth
+// ✅ Load the user's name
 function loadUserName() {
-    onAuthStateChanged(auth, async (user) => {
+    onAuthStateChanged(auth, (user) => {
         if (user) {
-            document.getElementById("user-name").textContent = user.displayName || "User";
+            // Fetch first name from Firebase Authentication or Firestore
+            const userRef = collection(db, "users");
+            getDocs(userRef).then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    if (doc.id === user.uid) {
+                        const data = doc.data();
+                        document.getElementById("user-name").textContent = data.firstName || "User";
+                    }
+                });
+            });
 
-            // ✅ Fetch latest logs
-            await getLatestLog("diet", "time", "date", null, "latest-diet-time", "latest-diet-date");
-            await getLatestLog("exercise", "time", "date", null, "latest-exercise-time", "latest-exercise-date");
-            await getLatestLog("sugar", "time", "date", "level", "latest-sugar-level", "latest-sugar-date", "latest-sugar-level");
-        } else {
-            console.log("No user logged in.");
+            // ✅ Get the latest logs for Diet, Exercise, and Sugar Level
+            getLatestLog("diet", "time", "date", null, "latest-diet-time", "latest-diet-date");
+            getLatestLog("exercise", "time", "date", "duration", "latest-exercise-time", "latest-exercise-date");
+            getLatestLog("sugar", "time", "date", "level", "latest-sugar-level", "latest-sugar-date", "latest-sugar-level");
         }
     });
 }
 
 // ✅ Function to handle sign out
 document.getElementById("signout-btn").addEventListener("click", () => {
-    signOut(auth).then(() => {
-        window.location.href = "index.html";
-    }).catch((error) => {
-        console.error("Error signing out:", error);
-    });
+    signOut(auth)
+        .then(() => {
+            window.location.href = "index.html";
+        })
+        .catch((error) => {
+            console.error("Error signing out:", error);
+        });
 });
 
 // ✅ Load user data on page load
