@@ -50,6 +50,8 @@ document.addEventListener("DOMContentLoaded", () => {
             editMode = false;
             editLogId = null;
             exerciseForm.reset();
+
+            // ✅ Ensure form is visible
             logForm.classList.remove("hidden");
             logForm.style.display = "block";
         });
