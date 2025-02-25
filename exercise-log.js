@@ -17,82 +17,94 @@ document.addEventListener("DOMContentLoaded", () => {
             document.body.classList.toggle("no-scroll"); 
         });
     } else {
-        console.error("ERROR: Menu toggle button or nav menu not found.");
+        console.error("❌ ERROR: Menu toggle button or nav menu not found.");
     }
 
-    // Sign Out 
-    const signOutBtn = document.getElementById("signout-btn");
+    // ✅ Ensure sign-out button works
+    const signOutBtn = document.querySelector(".signout-btn");
     if (signOutBtn) {
         signOutBtn.addEventListener("click", () => {
             signOut(auth).then(() => {
                 window.location.href = "login.html";
             }).catch((error) => {
-                console.error("Error signing out:", error);
+                console.error("❌ Error signing out:", error);
             });
         });
     } else {
-        console.error("Sign-out button not found!");
+        console.error("❌ ERROR: Sign-out button not found!");
     }
 
-    // Load logs on page load
+    // ✅ Load logs on page load
     auth.onAuthStateChanged((user) => {
         if (user) {
             loadLogs();
         }
     });
 
-    // save or update a log
-    document.getElementById("exercise-form").addEventListener("submit", async (e) => {
-        e.preventDefault();
+    // ✅ Save or update a log
+    const exerciseForm = document.getElementById("exercise-form");
+    if (exerciseForm) {
+        exerciseForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
 
-        const user = auth.currentUser;
-        if (!user) return;
+            const user = auth.currentUser;
+            if (!user) return;
 
-        const workoutDetails = document.getElementById("workout-details").value;
-        const workoutHour = document.getElementById("workout-hour").value;
-        const workoutMinute = document.getElementById("workout-minute").value;
-        const bodyWeight = document.getElementById("body-weight").value;
-        const workoutDate = document.getElementById("workout-date").value;
-        const intensityLevel = document.getElementById("intensity-level").value;
-        const workoutTime = `${workoutHour}h ${workoutMinute}m`;
+            const workoutDetails = document.getElementById("workout-details").value;
+            const workoutHour = document.getElementById("workout-hour").value;
+            const workoutMinute = document.getElementById("workout-minute").value;
+            const bodyWeight = document.getElementById("body-weight").value;
+            const workoutDate = document.getElementById("workout-date").value;
+            const intensityLevel = document.getElementById("intensity-level").value;
+            const workoutTime = `${workoutHour}h ${workoutMinute}m`;
 
-        try {
-            if (editMode && editLogId) {
-                await updateDoc(doc(db, `logs/${user.uid}/exercise`, editLogId), {
-                    details: workoutDetails,
-                    time: workoutTime,
-                    date: workoutDate,
-                    weight: bodyWeight,
-                    intensity: intensityLevel
-                });
-            } else {
-                await addDoc(collection(db, `logs/${user.uid}/exercise`), {
-                    details: workoutDetails,
-                    time: workoutTime,
-                    date: workoutDate,
-                    weight: bodyWeight,
-                    intensity: intensityLevel
-                });
+            try {
+                if (editMode && editLogId) {
+                    await updateDoc(doc(db, `logs/${user.uid}/exercise`, editLogId), {
+                        details: workoutDetails,
+                        time: workoutTime,
+                        date: workoutDate,
+                        weight: bodyWeight,
+                        intensity: intensityLevel
+                    });
+                } else {
+                    await addDoc(collection(db, `logs/${user.uid}/exercise`), {
+                        details: workoutDetails,
+                        time: workoutTime,
+                        date: workoutDate,
+                        weight: bodyWeight,
+                        intensity: intensityLevel
+                    });
+                }
+
+                exerciseForm.reset();
+                document.getElementById("log-form").style.display = "none";
+                editMode = false;
+                editLogId = null;
+                loadLogs();
+            } catch (error) {
+                console.error("❌ Error saving log:", error);
             }
-
-            document.getElementById("exercise-form").reset();
-            document.getElementById("log-form").style.display = "none";
-            editMode = false;
-            editLogId = null;
-            loadLogs();
-        } catch (error) {
-            console.error("Error saving log:", error);
-        }
-    });
+        });
+    } else {
+        console.error("❌ ERROR: Exercise form not found!");
+    }
 });
 
-// load logs
+/**
+ * ✅ Load logs from Firestore
+ */
 async function loadLogs() {
     const user = auth.currentUser;
     if (!user) return;
 
     const logsContainer = document.getElementById("logs-container");
-    logsContainer.innerHTML = "";
+    if (!logsContainer) {
+        console.error("❌ ERROR: Logs container not found.");
+        return;
+    }
+
+    logsContainer.innerHTML = ""; // Clear logs before loading new ones
 
     const querySnapshot = await getDocs(collection(db, `logs/${user.uid}/exercise`));
     querySnapshot.forEach((doc) => {
@@ -100,7 +112,9 @@ async function loadLogs() {
     });
 }
 
-// log card
+/**
+ * ✅ Create a log card element
+ */
 function createLogCard(id, data) {
     const card = document.createElement("div");
     card.classList.add("log-card");
@@ -117,7 +131,7 @@ function createLogCard(id, data) {
         <button class="edit-btn" data-id="${id}">Edit</button>
     `;
 
-    //Delete & Edit
+    // ✅ Delete button functionality
     card.querySelector(".delete-btn").addEventListener("click", async () => {
         await deleteDoc(doc(db, `logs/${auth.currentUser.uid}/exercise`, id));
         loadLogs();
