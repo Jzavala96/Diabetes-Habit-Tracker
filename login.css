@@ -56,18 +56,18 @@ body {
 
 /* Left Side: Login Box */
 .login-box {
-    flex: 1; /* Takes half of the screen */
-    min-width: 300px; /* Minimum width */
-    max-width: 50%; /* Maximum width to ensure it does not stretch too much */
+    flex: 1; 
+    min-width: 300px;
+    max-width: 50%; 
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Center content vertically in the box */
-    align-items: center; /* Center content horizontally */
+    justify-content: center;
+    align-items: center; 
     background-color: #edf5f3;
     padding: 250px 50px;
 }
 
-/* ✅ Face ID Icon Centered */
+/* Face ID */
 .face-id-container {
     display: flex;
     justify-content: center;
@@ -81,7 +81,7 @@ body {
     cursor: pointer;
 }
 
-/* ✅ Input Fields */
+/* Input Fields */
 input {
     width: 90%;
     padding: 12px;
@@ -90,7 +90,7 @@ input {
     border-radius: 5px;
 }
 
-/* ✅ Sign In Button */
+/* Sign In Button */
 button {
     width: 90%;
     padding: 12px;
@@ -105,9 +105,8 @@ button:hover {
     background: #0f4c75;
 }
 
-/* ✅ Right Side: Sign-Up Section (Full Height & Width) */
 .signup-box {
-    flex: 1; /* Takes up half of the width */
+    flex: 1; 
     height: 100%;
     background: url('img/logNsign.png') no-repeat center center/cover;
     display: flex;
@@ -119,7 +118,6 @@ button:hover {
     padding: 40px;
 }
 
-/* ✅ Ensure "NEW HERE?" text is centered */
 .signup-box h2 {
     font-size: 28px;
     margin-bottom: 10px;
@@ -130,7 +128,6 @@ button:hover {
     text-align: center;
 }
 
-/* ✅ Signup Button */
 .signup-button {
     display: inline-block;
     background: #96c44e;
@@ -144,7 +141,6 @@ button:hover {
     background: #7a9b3f;
 }
 
-/* ✅ Fix Footer to Stay at Bottom */
 footer {
     background-color: #908e8e;
     color: var(--white);
@@ -158,14 +154,14 @@ footer {
 /* ✅ Responsive Adjustments */
 @media (max-width: 1024px) {
     .login-container {
-        flex-direction: column; /* Stack elements for smaller screens */
+        flex-direction: column; 
         height: auto;
     }
 
     .login-box, .signup-box {
         width: 100%;
         max-width: 600px;
-        min-height: 500px; /* Adjusted for smaller screens */
+        min-height: 500px; 
         padding: 30px;
     }
 }
@@ -173,13 +169,13 @@ footer {
 @media (max-width: 768px) {
     .login-container {
         flex-direction: column;
-        padding-bottom: 60px; /* Prevents content from touching footer */
+        padding-bottom: 60px; 
     }
 
     .login-box, .signup-box {
         width: 90%;
         max-width: 400px;
         padding: 30px;
-        min-height: 450px; /* Adjust for smaller mobile screens */
+        min-height: 450px; 
     }
 }

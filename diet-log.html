@@ -12,13 +12,11 @@
 <body>
     <header>
         <img src="img/logo.png" alt="GlucoGuardian Logo" class="logo">
-        
-        <!-- ✅ Hamburger Menu -->
+    
         <button class="hamburger-menu" id="menu-toggle">
-            <i class="fa-solid fa-bars"></i> <!-- FontAwesome Icon -->
+            <i class="fa-solid fa-bars"></i>
         </button>
     
-        <!-- ✅ Navigation Menu -->
         <nav id="nav-menu">
             <a href="home.html">Home</a>
             <a href="exercise-log.html">Exercise Log</a>
@@ -33,16 +31,16 @@
         <h1>Diet Logs</h1>
         <button id="open-form-btn" class="add-btn">Add Diet</button>
 
-<!-- ✅ Hidden Form (Popup) -->
+<!--Hidden Form (Popup) -->
 <div id="log-form" class="popup-form hidden">
     <form id="diet-form">
         <h3>Diet Log</h3>
 
-        <!-- ✅ Meal Details -->
+        <!--  Meal Details -->
         <label for="meal-details">Add details of what was eaten:</label>
         <textarea id="meal-details" required></textarea>
 
-        <!-- ✅ Time Selector -->
+        <!--  Time Selector -->
         <label for="meal-time">Time:</label>
         <div style="display: flex; gap: 10px;">
             <input type="number" id="meal-hour" min="1" max="12" required placeholder="HH">
@@ -53,7 +51,7 @@
             </select>
         </div>
 
-        <!-- ✅ Meal Type Selection -->
+        <!-- Meal Type Selection -->
         <label>Select Meal Type:</label>
         <div class="meal-selection">
             <button type="button" class="meal-btn" data-meal="Breakfast">Breakfast</button>
@@ -62,15 +60,15 @@
         </div>
         <input type="hidden" id="selected-meal" required>
 
-        <!-- ✅ Date Selector -->
+        <!--  Date Selector -->
         <label for="meal-date">Date:</label>
         <input type="date" id="meal-date" required>
 
-        <!-- ✅ Snack Label -->
+        <!-- Snack Label -->
         <label for="snack-label">Snack Label:</label>
         <input type="text" id="snack-label">
 
-        <!-- ✅ Save & Cancel Buttons -->
+        <!-- Save & Cancel Buttons -->
         <div>
             <button type="submit">Log</button>
             <button type="button" id="close-form-btn">Cancel</button>
@@ -78,11 +76,7 @@
     </form>
 </div>
 
-
-
-
-
-        <!-- ✅ Logs will be displayed here -->
+        <!-- Logs will be displayed here -->
         <section id="logs-container" class="logs-container"></section>
     </main>
 

@@ -1,5 +1,5 @@
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, updateDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
 
 // ✅ Initialize Firebase services
 const db = getFirestore();
@@ -9,8 +9,8 @@ const auth = getAuth();
 let editMode = false;
 let editLogId = null;
 
-
 document.addEventListener("DOMContentLoaded", () => {
+    // ✅ Hamburger Menu Toggle
     const menuToggle = document.getElementById("menu-toggle");
     const navMenu = document.getElementById("nav-menu");
 
@@ -19,6 +19,22 @@ document.addEventListener("DOMContentLoaded", () => {
             navMenu.classList.toggle("show");
             document.body.classList.toggle("no-scroll"); 
         });
+    } else {
+        console.error("❌ ERROR: Menu toggle button or nav menu not found.");
+    }
+
+    // ✅ Sign Out Functionality
+    const signOutBtn = document.getElementById("signout-btn");
+    if (signOutBtn) {
+        signOutBtn.addEventListener("click", () => {
+            signOut(auth).then(() => {
+                window.location.href = "login.html"; // Redirect to login after sign-out
+            }).catch((error) => {
+                console.error("❌ Error signing out:", error);
+            });
+        });
+    } else {
+        console.error("❌ Sign-out button not found!");
     }
 
     // ✅ Meal Selection Logic
@@ -38,9 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeFormBtn = document.getElementById("close-form-btn");
     const logForm = document.getElementById("log-form");
     const dietForm = document.getElementById("diet-form");
-
-    let editMode = false;
-    let editLogId = null;
 
     if (openFormBtn && closeFormBtn && logForm) {
         openFormBtn.addEventListener("click", () => {
@@ -170,48 +183,42 @@ function createLogCard(id, data) {
         loadLogs();
     });
 
- // ✅ Edit button functionality
-card.querySelector(".edit-btn").addEventListener("click", async () => {
-    console.log("📝 Edit Clicked!");
+    // ✅ Edit button functionality
+    card.querySelector(".edit-btn").addEventListener("click", async () => {
+        console.log("📝 Edit Clicked!");
 
-    const user = auth.currentUser;
-    if (!user) return;
+        const user = auth.currentUser;
+        if (!user) return;
 
-    const docRef = doc(db, `logs/${user.uid}/diet`, id);
-    const docSnap = await getDoc(docRef);
+        const docRef = doc(db, `logs/${user.uid}/diet`, id);
+        const docSnap = await getDoc(docRef);
 
-    if (docSnap.exists()) {
-        const data = docSnap.data();
+        if (docSnap.exists()) {
+            const data = docSnap.data();
 
-        // ✅ Populate form with existing data
-        document.getElementById("meal-details").value = data.details;
-        document.getElementById("meal-hour").value = data.time.split(":")[0];
-        document.getElementById("meal-minute").value = data.time.split(":")[1].split(" ")[0];
-        document.getElementById("meal-period").value = data.time.split(" ")[1];
-        document.getElementById("meal-date").value = data.date;
-        document.getElementById("snack-label").value = data.snackLabel || "None";
+            // ✅ Populate form with existing data
+            document.getElementById("meal-details").value = data.details;
+            document.getElementById("meal-hour").value = data.time.split(":")[0];
+            document.getElementById("meal-minute").value = data.time.split(":")[1].split(" ")[0];
+            document.getElementById("meal-period").value = data.time.split(" ")[1];
+            document.getElementById("meal-date").value = data.date;
+            document.getElementById("snack-label").value = data.snackLabel || "None";
 
-        // ✅ Select correct meal type button
-        const mealButtons = document.querySelectorAll(".meal-btn");
-        mealButtons.forEach(btn => {
-            if (btn.getAttribute("data-meal") === data.mealType) {
-                btn.classList.add("selected");
-            } else {
-                btn.classList.remove("selected");
-            }
-        });
+            // ✅ Select correct meal type button
+            const mealButtons = document.querySelectorAll(".meal-btn");
+            mealButtons.forEach(btn => {
+                if (btn.getAttribute("data-meal") === data.mealType) {
+                    btn.classList.add("selected");
+                } else {
+                    btn.classList.remove("selected");
+                }
+            });
 
-        // ✅ Set Edit Mode & Log ID
-        editMode = true;
-        editLogId = id;
-
-        // ✅ Show Form
-        document.getElementById("log-form").style.display = "block";
-    }
- 
-});
-
+            editMode = true;
+            editLogId = id;
+            document.getElementById("log-form").style.display = "block";
+        }
+    });
 
     return card;
 }
-

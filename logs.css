@@ -1,39 +1,38 @@
-/* ✅ General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
 }
-/* ✅ Ensure the main content expands to push footer down */
+
 .container {
-    flex: 1; /* Expands to fill space */
+    flex: 1; 
     padding-bottom: 80px;
 }
 
 header {
-    display: flex; /* Enables Flexbox */
-    align-items: center; /* Vertically centers the items in the header */
-    justify-content: space-between; /* Positions items on opposite ends */
+    display: flex;
+    align-items: center; 
+    justify-content: space-between; 
     background-color: var(--blue);
     color: var(--white);
     padding: 20px;
 }
 
 header .logo {
-    width: 150px; /* Control the width of your logo */
-    height: auto; /* Maintains aspect ratio of the logo */
+    width: 150px; 
+    height: auto; 
 }
 
 header .login a {
     color: var(--white);
     text-decoration: none;
     display: flex;
-    align-items: center; /* Ensures the icon aligns nicely with the text */
+    align-items: center; 
 }
 
 header .login i {
-    margin-right: 5px; /* Adds spacing between the icon and text */
+    margin-right: 5px; 
 }
 nav {
     display: flex;
@@ -45,7 +44,7 @@ nav a {
     text-decoration: none;
     margin: 0 10px;
 }
-/* ✅ Hamburger Menu Button */
+
 .hamburger-menu {
     background: none;
     border: none;
@@ -58,7 +57,6 @@ nav a {
     color: #000;
 }
 
-/* ✅ Navigation Menu */
 #nav-menu {
     display: flex;
     gap: 15px;
@@ -72,14 +70,12 @@ nav a {
     cursor: pointer;
 }
 
-/* ✅ Page Container */
 .container {
     width: 80%;
     margin: 20px auto;
     text-align: center;
 }
 
-/* ✅ Add Button */
 .add-btn {
     background: #7CB518;
     color: white;
@@ -89,7 +85,6 @@ nav a {
     margin-bottom: 20px;
 }
 
-/* ✅ Logs Container */
 .logs-container {
     display: flex;
     flex-direction: column;
@@ -99,7 +94,6 @@ nav a {
     padding-bottom: 20px;
 }
 
-/* ✅ Log Cards */
 .log-card {
     background: white;
     padding: 15px;
@@ -111,7 +105,6 @@ nav a {
     margin-bottom: 15px;
 }
 
-/* ✅ Log Header (Date & Delete Button) */
 .log-header {
     display: flex;
     justify-content: space-between;
@@ -124,7 +117,6 @@ nav a {
     margin-bottom: 10px;
 }
 
-/* ✅ Delete Button */
 .delete-btn {
     background: red;
     color: white;
@@ -138,27 +130,23 @@ nav a {
     background: darkred;
 }
 
-/* ✅ Log Card Title (H3) */
 .log-card h3 {
     margin: 0;
     font-size: 18px;
     color: #004080;
 }
 
-/* ✅ Log Card Text */
 .log-card p {
     margin: 5px 0;
     font-size: 14px;
 }
 
-
-/* ✅ FORM STYLING: Match Mockup */
 .popup-form {
-    position: fixed;  /* ✅ Center Form */
+    position: fixed;  
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 50%;  /* ✅ Adjust width */
+    width: 50%;  
     max-width: 600px;
     background: white;
     padding: 20px;
@@ -167,12 +155,10 @@ nav a {
     z-index: 1000;
 }
 
-/* ✅ Hide Form by Default */
 .hidden {
     display: none;
 }
 
-/* ✅ Improve Input Fields */
 .popup-form input,
 .popup-form select,
 .popup-form textarea {
@@ -183,7 +169,6 @@ nav a {
     border-radius: 5px;
 }
 
-/* ✅ Improve Buttons */
 .popup-form button {
     background: #007BFF;
     color: white;
@@ -198,7 +183,6 @@ nav a {
     background: #0056b3;
 }
 
-/* ✅ Meal Selection Buttons */
 .meal-selection {
     display: flex;
     gap: 10px;
@@ -218,13 +202,10 @@ nav a {
     background: #4cae4c;
 }
 
-/* ✅ Highlight Selected Meal */
 .meal-btn.selected {
     background: #004080;
 }
 
-
-/* ✅ Fix Footer to Bottom */
 footer {
     background-color: #908e8e;
     color: white;
@@ -235,37 +216,44 @@ footer {
     bottom: 0;
    
 }
-/* ✅ Responsive Styles */
+/* Responsive Styles */
 @media screen and (max-width: 768px) {
     .hamburger-menu {
         display: block;
+        font-size: 24px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: black;
+        position: absolute;
+        right: 20px;
+        top: 15px;
     }
 
     #nav-menu {
-        display: none;
+        display: none;  
         flex-direction: column;
-        background-color: white;
-        position: fixed;
-        top: 0;
+        position: absolute;
+        top: 60px;
         left: 0;
         width: 100%;
-        height: 100vh; /* Make it full-screen for better UX */
-        text-align: center;
-        padding-top: 50px;
+        background-color: white;
+        padding: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         z-index: 1000;
     }
 
-    #nav-menu.show {
+   #nav-menu.show {
         display: flex;
     }
 
     #nav-menu a {
-        padding: 15px;
-        font-size: 20px;
         display: block;
-        color: black;
+        text-align: center;
+        padding: 15px;
+        font-size: 18px;
         text-decoration: none;
+        color: black;
     }
 
     #nav-menu button {
@@ -273,8 +261,9 @@ footer {
         color: white;
         width: 100%;
         padding: 15px;
-        font-size: 20px;
+        font-size: 18px;
         border: none;
         cursor: pointer;
+        text-align: center;
     }
 }

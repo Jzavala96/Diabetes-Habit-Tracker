@@ -4,20 +4,18 @@ import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/fi
 const db = getFirestore();
 const auth = getAuth();
 
-/**
- * ✅ Fetch the most recent log from Firestore
- */
+//recent log
 async function getLatestLog(collectionName, timeField, dateField, valueField, timeElement, dateElement, valueElement = null) {
     const user = auth.currentUser;
     if (!user) {
-        console.log("❌ No authenticated user.");
+        console.log("No authenticated user.");
         return;
     }
 
-    // ✅ Reference to Firestore collection
+    // Reference to Firestore collection
     const logsRef = collection(db, `logs/${user.uid}/${collectionName}`);
 
-    // ✅ Query for the most recent entry (sorted by date first, then time)
+    // Query for the most recent entry (sorted by date first, then time)
     const q = query(logsRef, orderBy(dateField, "desc"), orderBy(timeField, "desc"), limit(1));
 
     try {
@@ -25,9 +23,9 @@ async function getLatestLog(collectionName, timeField, dateField, valueField, ti
 
         if (!snapshot.empty) {
             const latestLog = snapshot.docs[0].data();
-            console.log(`✅ Latest ${collectionName} Log:`, latestLog);
+            console.log(`Latest ${collectionName} Log:`, latestLog);
 
-            // ✅ Update UI elements
+            // Update UI elements
             document.getElementById(timeElement).textContent = latestLog[timeField] || "--";
             document.getElementById(dateElement).textContent = latestLog[dateField] || "--";
 
@@ -35,20 +33,20 @@ async function getLatestLog(collectionName, timeField, dateField, valueField, ti
                 document.getElementById(valueElement).textContent = latestLog[valueField] + " mmol/L";
             }
         } else {
-            console.log(`⚠️ No logs found for ${collectionName}`);
+            console.log(` No logs found for ${collectionName}`);
         }
     } catch (error) {
-        console.error(`❌ Error fetching ${collectionName} log:`, error);
+        console.error(`Error fetching ${collectionName} log:`, error);
     }
 }
 
 /**
- * ✅ Load the user's first name from Firestore
+ * Load the user's first name from Firestore
  */
 async function loadUserName() {
     onAuthStateChanged(auth, async (user) => {
         if (user) {
-            // ✅ Fetch user's first name from Firestore
+            // user's first name from Firestore
             const userDocRef = doc(db, "users", user.uid);
             const userSnapshot = await getDoc(userDocRef);
 
@@ -59,7 +57,7 @@ async function loadUserName() {
                 document.getElementById("user-name").textContent = "User";
             }
 
-            // ✅ Fetch latest logs for each category
+            // latest logs for each category
             getLatestLog("diet", "time", "date", null, "latest-diet-time", "latest-diet-date");
             getLatestLog("exercise", "time", "date", null, "latest-exercise-time", "latest-exercise-date");
             getLatestLog("sugar", "logTime", "sugarDate", "sugarLevel", "latest-sugar-level", "latest-sugar-date", "latest-sugar-level");
@@ -67,14 +65,11 @@ async function loadUserName() {
     });
 }
 
-/**
- * ✅ Handle sign-out
- */
 document.getElementById("signout-btn").addEventListener("click", () => {
     signOut(auth).then(() => {
         window.location.href = "index.html";
     }).catch((error) => {
-        console.error("❌ Error signing out:", error);
+        console.error("Error signing out:", error);
     });
 });
 
@@ -82,7 +77,7 @@ document.getElementById("signout-btn").addEventListener("click", () => {
 document.addEventListener("DOMContentLoaded", () => {
     loadUserName();
 
-    // ✅ Hamburger Menu Toggle
+    // Hamburger Menu Toggle
     const menuToggle = document.getElementById("menu-toggle");
     const navMenu = document.getElementById("nav-menu");
 
@@ -91,6 +86,6 @@ document.addEventListener("DOMContentLoaded", () => {
             navMenu.classList.toggle("show");
         });
     } else {
-        console.error("❌ ERROR: Menu toggle button or nav menu not found.");
+        console.error("ERROR: Menu toggle button or nav menu not found.");
     }
 });
