@@ -8,11 +8,15 @@ let editMode = false;
 let editLogId = null;
 
 document.addEventListener("DOMContentLoaded", () => {
+    console.log("✅ JavaScript Loaded!");
+
+    // ✅ Hamburger Menu Toggle
     const menuToggle = document.getElementById("menu-toggle");
     const navMenu = document.getElementById("nav-menu");
 
     if (menuToggle && navMenu) {
         menuToggle.addEventListener("click", () => {
+            console.log("✅ Menu Toggled");
             navMenu.classList.toggle("show");
             document.body.classList.toggle("no-scroll"); 
         });
@@ -20,8 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("❌ ERROR: Menu toggle button or nav menu not found.");
     }
 
-    // ✅ Ensure sign-out button works
-    const signOutBtn = document.querySelector(".signout-btn");
+    // ✅ Sign Out Button
+    const signOutBtn = document.getElementById("signout-btn");
     if (signOutBtn) {
         signOutBtn.addEventListener("click", () => {
             signOut(auth).then(() => {
@@ -31,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     } else {
-        console.error("❌ ERROR: Sign-out button not found!");
+        console.error("❌ Sign-out button not found!");
     }
 
     // ✅ Load logs on page load
