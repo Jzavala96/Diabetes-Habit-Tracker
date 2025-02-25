@@ -162,7 +162,16 @@ function createLogCard(id, data) {
             editLogId = id;
             document.getElementById("log-form").style.display = "block";
         }
+     
     });
 
     return card;
 }
+   // ✅ Function to handle sign-out
+   document.getElementById("signout-btn").addEventListener("click", () => {
+    signOut(auth).then(() => {
+        window.location.href = "index.html";
+    }).catch((error) => {
+        console.error("❌ Error signing out:", error);
+    });
+});
