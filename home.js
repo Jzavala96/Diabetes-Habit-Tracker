@@ -4,7 +4,6 @@ import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/fi
 const db = getFirestore();
 const auth = getAuth();
 
-// ✅ Function to get the latest log from Firestore
 async function getLatestLog(collectionName, timeField, dateField, valueField, timeElement, dateElement, valueElement = null) {
     const user = auth.currentUser;
     if (!user) {
@@ -15,20 +14,20 @@ async function getLatestLog(collectionName, timeField, dateField, valueField, ti
     // ✅ Reference to Firestore collection
     const logsRef = collection(db, `logs/${user.uid}/${collectionName}`);
 
-    // ✅ Query for the most recent entry (sorted by date dynamically)
-    const q = query(logsRef, orderBy(dateField, "desc"), limit(1));
+    // ✅ Query for the most recent entry (sorted by date & time)
+    const q = query(logsRef, orderBy(dateField, "desc"), orderBy(timeField, "desc"), limit(1));
 
     try {
         const snapshot = await getDocs(q);
 
         if (!snapshot.empty) {
             const latestLog = snapshot.docs[0].data();
-            console.log(`✅ Latest ${collectionName} Log:`, latestLog); // Debugging
+            console.log(`✅ Latest ${collectionName} Log:`, latestLog);
 
             // ✅ Update UI elements
             document.getElementById(timeElement).textContent = latestLog[timeField] || "--";
             document.getElementById(dateElement).textContent = latestLog[dateField] || "--";
-            
+
             if (valueElement) {
                 document.getElementById(valueElement).textContent = latestLog[valueField] + " mmol/L";
             }
@@ -39,6 +38,7 @@ async function getLatestLog(collectionName, timeField, dateField, valueField, ti
         console.error(`❌ Error fetching ${collectionName} log:`, error);
     }
 }
+
 
 // ✅ Function to load the user's name
 async function loadUserName() {
@@ -56,9 +56,11 @@ async function loadUserName() {
             }
 
             // ✅ Fetch latest logs for each category (dynamically using correct fields)
+          // ✅ Fetch latest logs for each category
             getLatestLog("diet", "time", "date", null, "latest-diet-time", "latest-diet-date");
             getLatestLog("exercise", "time", "date", null, "latest-exercise-time", "latest-exercise-date");
             getLatestLog("sugar", "logTime", "sugarDate", "sugarLevel", "latest-sugar-level", "latest-sugar-date", "latest-sugar-level");
+
         }
     });
 }
