@@ -78,9 +78,7 @@ document.getElementById("signout-btn").addEventListener("click", () => {
     });
 });
 
-/**
- * ✅ Load user data on page load
- */
+
 document.addEventListener("DOMContentLoaded", () => {
     loadUserName();
 
