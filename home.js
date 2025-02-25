@@ -1,4 +1,4 @@
-import { getFirestore, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+import { getFirestore, collection, query, orderBy, limit, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
 
 const db = getFirestore();
@@ -15,9 +15,8 @@ async function getLatestLog(collectionName, timeField, dateField, valueField, ti
     // ✅ Reference to Firestore collection
     const logsRef = collection(db, `logs/${user.uid}/${collectionName}`);
 
-    // ✅ Query for the most recent entry (sorted by date and time in descending order)
-    const q = query(logsRef, orderBy("sugarDate", "desc"), limit(1));
-
+    // ✅ Query for the most recent entry (sorted by date dynamically)
+    const q = query(logsRef, orderBy(dateField, "desc"), limit(1));
 
     try {
         const snapshot = await getDocs(q);
@@ -42,22 +41,21 @@ async function getLatestLog(collectionName, timeField, dateField, valueField, ti
 }
 
 // ✅ Function to load the user's name
-function loadUserName() {
+async function loadUserName() {
     onAuthStateChanged(auth, async (user) => {
         if (user) {
-            // ✅ Fetch user's first name from Firestore
-            const userDocRef = collection(db, "users");
-            const userQuery = query(userDocRef, orderBy("uid"), limit(1));
-            const userSnapshot = await getDocs(userQuery);
+            // ✅ Fetch user's first name from Firestore (now uses correct document path)
+            const userDocRef = doc(db, "users", user.uid);
+            const userSnapshot = await getDoc(userDocRef);
 
-            if (!userSnapshot.empty) {
-                const userData = userSnapshot.docs[0].data();
+            if (userSnapshot.exists()) {
+                const userData = userSnapshot.data();
                 document.getElementById("user-name").textContent = userData.firstName || "User";
             } else {
                 document.getElementById("user-name").textContent = "User";
             }
 
-            // ✅ Fetch latest logs for each category
+            // ✅ Fetch latest logs for each category (dynamically using correct fields)
             getLatestLog("diet", "time", "date", null, "latest-diet-time", "latest-diet-date");
             getLatestLog("exercise", "time", "date", null, "latest-exercise-time", "latest-exercise-date");
             getLatestLog("sugar", "logTime", "sugarDate", "sugarLevel", "latest-sugar-level", "latest-sugar-date", "latest-sugar-level");
